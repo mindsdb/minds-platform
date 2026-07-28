@@ -4,6 +4,8 @@
 
 # MindsHub 
 
+[![MCP Toplist](https://mcptoplist.com/badge/pulsemcp%2Fmindsdb.svg)](https://mcptoplist.com/server/pulsemcp%2Fmindsdb)
+
 **The unified workspace where open-source models get things done for you.**
 
 _Make AI do actual work. Swap the model anytime — keep everything you've built._
