@@ -34,8 +34,8 @@ This repository is the **platform superproject**: it pulls together the desktop/
 Pick whichever fits:
 
 - **Web — nothing to install.** Open **[console.mindshub.ai](https://console.mindshub.ai/?utm_source=github&utm_medium=repo-readme&utm_campaign=minds-readme)** and sign in.
-- **macOS.** [Download the desktop app](https://downloads.mindsdb.com/mindshub-cowork/mac/mindshub-cowork-latest.pkg) (`.pkg`).
-- **Windows.** [Download the desktop app](https://downloads.mindsdb.com/mindshub-cowork/windows/mindshub-cowork-latest.exe) (`.exe`).
+- **macOS.** [Download the desktop app](https://downloads.mindshub.ai/mindshub-cowork/mac/mindshub-cowork-latest.pkg) (`.pkg`).
+- **Windows.** [Download the desktop app](https://downloads.mindshub.ai/mindshub-cowork/windows/mindshub-cowork-latest.exe) (`.exe`).
 - **Run it open source.** [Build from source](#build-from-source) — see below.
 
 Free to start. Pro adds all frontier models and private artifacts — see [pricing](https://mindshub.ai/pricing?utm_source=github&utm_medium=repo-readme&utm_campaign=minds-readme).
