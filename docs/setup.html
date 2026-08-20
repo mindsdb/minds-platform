@@ -129,6 +129,29 @@
   .nav-links a:hover { color: var(--ink); opacity: 1; }
   .nav-links a.active { color: var(--accent); }
 
+  /* ── Hosted API banner ── */
+  .api-banner {
+    background: var(--accent-bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .api-banner-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 10px 24px;
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    font-size: 13px; line-height: 1.55; color: var(--ink-3);
+  }
+  .api-banner-tag {
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(34,211,238,0.30);
+    border-radius: 100px; padding: 2px 9px;
+    white-space: nowrap;
+  }
+  .api-banner-text { flex: 1; min-width: 240px; }
+  .api-banner-text a { font-weight: 500; }
+
   /* ── Layout ── */
   .shell {
     max-width: 1100px; margin: 0 auto;
@@ -346,6 +369,7 @@
       <a href="setup.html" class="active">Setup</a>
       <a href="use-cases.html">Use Cases</a>
       <a href="api.html">API</a>
+      <a href="https://mindsdb.github.io/mindshub_inference/" target="_blank" rel="noopener">Hosted API ↗</a>
       <a href="https://github.com/mindsdb/minds-platform">GitHub ↗</a>
     </div>
     <button class="hamburger" aria-label="Toggle menu">
@@ -353,6 +377,17 @@
     </button>
   </div>
 </nav>
+
+<div class="api-banner">
+  <div class="api-banner-inner">
+    <span class="api-banner-tag">Hosted API</span>
+    <span class="api-banner-text">
+      These pages document Minds Cowork, the app and local server you run yourself.
+      For the hosted MindsHub API at api.mindshub.ai, with API keys, see the
+      <a href="https://mindsdb.github.io/mindshub_inference/" target="_blank" rel="noopener">hosted MindsHub API docs ↗</a>.
+    </span>
+  </div>
+</div>
 
 <div class="shell">
   <aside class="sidebar">
