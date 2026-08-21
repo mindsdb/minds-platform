@@ -103,7 +103,11 @@
   nav[data-open] .hamburger span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   nav[data-open] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
   nav[data-open] .hamburger span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-  @media (max-width: 640px) {
+  /* Raised from 640px. The row needs 719px once the back control is in it:
+     79 back + 117 brand + 411 links + 64 gaps + 48 padding. Below that and
+     above the old breakpoint the brand and every link wrapped inside a bar
+     still pinned at 52px, which no horizontal-overflow check can see. */
+  @media (max-width: 760px) {
     .hamburger { display: flex; }
     .nav-links {
       display: none;
@@ -368,7 +372,7 @@
       white-space: nowrap;
       transition: color 120ms;
     }
-    .nav-up:hover { color: var(--accent); }
+    .nav-up:hover { color: var(--accent); opacity: 1; }
   </style>
 </head>
 <body>
@@ -387,7 +391,7 @@
       <a href="setup.html" class="active">Setup</a>
       <a href="use-cases.html">Use Cases</a>
       <a href="api.html">API</a>
-      <a href="https://docs.mindshub.ai/inference/" target="_blank" rel="noopener">Hosted API ↗</a>
+      <a href="https://docs.mindshub.ai/inference/">Hosted API</a>
       <a href="https://github.com/mindsdb/minds-platform">GitHub ↗</a>
     </div>
     <button class="hamburger" aria-label="Toggle menu">
