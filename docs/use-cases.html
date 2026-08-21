@@ -242,18 +242,32 @@
   .cta-btn:hover { opacity: 0.85; }
 
   footer { border-top: 1px solid var(--line); padding: 24px; text-align: center; font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); letter-spacing: 0.06em; }
-</style>
+    /* The back control. Mono and uppercase so it sits with the brand beside it,
+       but dimmer and tighter-tracked so it does not read as part of it. */
+    .nav-up {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      white-space: nowrap;
+      transition: color 120ms;
+    }
+    .nav-up:hover { color: var(--accent); }
+  </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
+    <!-- Back to the chooser page at the root of the hostname. First in the
+         row, before the brand, which is where a back control is looked for.
+         Deliberately outside .nav-links: that collapses into the mobile
+         menu, and the only way out of this documentation set should not be
+         hidden behind a hamburger. -->
+    <a href="/" class="nav-up">&larr; All docs</a>
     <div class="brand"><div class="brand-dot"></div>Minds Cowork</div>
     <div class="nav-links">
-      <!-- Back to the chooser page at the root of the hostname. These docs
-           sit at /cowork, so the navbar brand returns to this set rather than
-           to the hostname, and without this there is no way back out. -->
-      <a href="/" class="nav-up">&larr; All docs</a>
       <a href="index.html">Docs</a>
       <a href="setup.html">Setup</a>
       <a href="use-cases.html" class="active">Use Cases</a>
