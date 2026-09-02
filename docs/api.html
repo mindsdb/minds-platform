@@ -132,25 +132,6 @@
   .api-banner-text { flex: 1; min-width: 240px; }
   .api-banner-text a { font-weight: 500; }
 
-  /* ── Local server note ── */
-  .local-note {
-    background: var(--accent-bg);
-    border: 1px solid rgba(34,211,238,0.30);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--r-lg);
-    padding: 18px 20px;
-    margin-bottom: 44px;
-  }
-  .local-note .ln-head {
-    font-family: var(--font-mono);
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 10px;
-  }
-  .local-note p { font-size: 13.5px; line-height: 1.6; color: var(--ink-2); }
-  .local-note p + p { margin-top: 10px; }
-
   .shell { max-width: 1100px; margin: 0 auto; padding: 64px 24px 120px; display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
   @media (max-width: 768px) { .shell { grid-template-columns: 1fr; } }
 
@@ -337,19 +318,13 @@
       <code>/api/v1</code>. All endpoints return JSON.
     </p>
 
-    <div class="local-note">
-      <div class="ln-head">Run it locally or hosted</div>
-      <p>
-        Every endpoint below is the same Tasks API whether you run the Cowork server yourself at
-        <code>http://localhost:26866/api/v1</code> or use MindsHub's hosted task platform at
-        <code>https://cowork.mindshub.ai/api/v1</code>. Use the toggle below to switch every
-        example on this page.
-      </p>
-      <p>
-        This is a different service from the hosted MindsHub Inference API, which runs at
-        <code>api.mindshub.ai</code> and is documented separately:
-        <a href="https://docs.mindshub.ai/inference/" target="_blank" rel="noopener">hosted MindsHub Inference API docs ↗</a>.
-      </p>
+    <div class="base-url">
+      <span class="burl-label">Base URL</span>
+      <div class="burl-toggle" role="group" aria-label="Choose base URL">
+        <button type="button" class="burl-opt active" data-base="hosted">Hosted</button>
+        <button type="button" class="burl-opt" data-base="local">Local</button>
+      </div>
+      <span class="burl-val burl-base">https://cowork.mindshub.ai/api/v1</span>
     </div>
 
     <!-- ERD -->
@@ -513,15 +488,6 @@
         <line x1="502" y1="293" x2="522" y2="293" stroke="#1E2A44" stroke-width="1" stroke-dasharray="4,2"/>
         <text x="528" y="297" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">usable within / 0..N</text>
       </svg>
-    </div>
-
-    <div class="base-url">
-      <span class="burl-label">Base URL</span>
-      <div class="burl-toggle" role="group" aria-label="Choose base URL">
-        <button type="button" class="burl-opt active" data-base="hosted">Hosted</button>
-        <button type="button" class="burl-opt" data-base="local">Local</button>
-      </div>
-      <span class="burl-val burl-base">https://cowork.mindshub.ai/api/v1</span>
     </div>
 
     <!-- Tasks -->
