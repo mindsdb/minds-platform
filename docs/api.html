@@ -545,23 +545,6 @@
 
       <div class="endpoint">
         <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path" data-path="/tasks">https://cowork.mindshub.ai/api/v1/tasks</span>
-          <span class="endpoint-desc">List tasks</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific project.</td></tr>
-            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>archived</code>. Returns all if omitted.</td></tr>
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Max results to return. Default <code>50</code>, max <code>200</code>.</td></tr>
-            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Pagination offset. Default <code>0</code>.</td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
           <span class="method post">POST</span>
           <span class="endpoint-path" data-path="/tasks">https://cowork.mindshub.ai/api/v1/tasks</span>
           <span class="endpoint-desc">Create a task</span>
@@ -579,6 +562,23 @@
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","goal":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path" data-path="/tasks">https://cowork.mindshub.ai/api/v1/tasks</span>
+          <span class="endpoint-desc">List tasks</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Query parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific project.</td></tr>
+            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>archived</code>. Returns all if omitted.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Max results to return. Default <code>50</code>, max <code>200</code>.</td></tr>
+            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Pagination offset. Default <code>0</code>.</td></tr>
+          </table>
         </div>
       </div>
 
@@ -782,21 +782,6 @@
 
       <div class="endpoint">
         <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path" data-path="/projects">https://cowork.mindshub.ai/api/v1/projects</span>
-          <span class="endpoint-desc">List all projects</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
-            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>.</td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
           <span class="method post">POST</span>
           <span class="endpoint-path" data-path="/projects">https://cowork.mindshub.ai/api/v1/projects</span>
           <span class="endpoint-desc">Create a project</span>
@@ -815,6 +800,21 @@
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
           </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path" data-path="/projects">https://cowork.mindshub.ai/api/v1/projects</span>
+          <span class="endpoint-desc">List all projects</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Query parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
+            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>.</td></tr>
+          </table>
         </div>
       </div>
 
@@ -1040,21 +1040,6 @@
 
       <div class="endpoint">
         <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path" data-path="/files">https://cowork.mindshub.ai/api/v1/files</span>
-          <span class="endpoint-desc">List files</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
           <span class="method post">POST</span>
           <span class="endpoint-path" data-path="/files">https://cowork.mindshub.ai/api/v1/files</span>
           <span class="endpoint-desc">Upload a file</span>
@@ -1073,6 +1058,21 @@
   -F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
           </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path" data-path="/files">https://cowork.mindshub.ai/api/v1/files</span>
+          <span class="endpoint-desc">List files</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Query parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
+          </table>
         </div>
       </div>
 
