@@ -1482,6 +1482,18 @@
   </span>-F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
           </div>
+<p class="schema-label">Response — File object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:              <span class="st">"file_abc123"</span>,
+  <span class="hl">"name"</span>:            <span class="st">"Q2-report.pdf"</span>,
+  <span class="hl">"mime_type"</span>:       <span class="st">"application/pdf"</span>,
+  <span class="hl">"size"</span>:            <span class="st">204800</span>,
+  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,
+  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
             </div>
           </div>
         </div>
@@ -1502,6 +1514,11 @@
           </table>
             </div>
             <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files?project_id=proj_xyz"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
 <p class="schema-label">Response — File object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
@@ -1524,6 +1541,26 @@
           <span class="method delete">DELETE</span>
           <span class="endpoint-path" data-path="/files/{id}">https://cowork.mindshub.ai/api/v1/files/{id}</span>
           <span class="endpoint-desc">Delete a file</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">File ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files/file_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
