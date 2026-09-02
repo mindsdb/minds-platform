@@ -177,6 +177,8 @@
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 48px;
     font-family: var(--font-mono); font-size: 13px;
+    position: sticky; top: 64px; z-index: 35;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
   }
   .base-url .burl-label {
     font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
@@ -314,7 +316,6 @@
     <div class="sidebar-label">Endpoints</div>
     <ul>
       <li><a href="#overview">Overview</a></li>
-      <li><a href="#responses">Responses</a></li>
       <li><a href="#tasks">Tasks</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#artifacts">Artifacts</a></li>
@@ -340,9 +341,9 @@
       <div class="ln-head">Run it locally or hosted</div>
       <p>
         Every endpoint below is the same Tasks API whether you run the Cowork server yourself at
-        <code><span class="burl-base">http://localhost:26866/api/v1</span></code> (no API key, not reachable over the internet)
-        or use MindsHub's hosted instance at <code>https://cowork.mindshub.ai/api/v1</code> (an
-        API key is required). Use the toggle below to switch every example on this page.
+        <code>http://localhost:26866/api/v1</code> or use MindsHub's hosted task platform at
+        <code>https://cowork.mindshub.ai/api/v1</code>. Use the toggle below to switch every
+        example on this page.
       </p>
       <p>
         This is a different service from the hosted MindsHub Inference API, which runs at
@@ -517,83 +518,10 @@
     <div class="base-url">
       <span class="burl-label">Base URL</span>
       <div class="burl-toggle" role="group" aria-label="Choose base URL">
-        <button type="button" class="burl-opt active" data-base="local">Local</button>
-        <button type="button" class="burl-opt" data-base="hosted">Hosted</button>
+        <button type="button" class="burl-opt active" data-base="hosted">Hosted</button>
+        <button type="button" class="burl-opt" data-base="local">Local</button>
       </div>
-      <span class="burl-val burl-base">http://localhost:26866/api/v1</span>
-    </div>
-
-    <!-- Responses -->
-    <div class="api-section" id="responses">
-      <h2>Responses</h2>
-      <p class="section-desc">Stream AI responses from the agent. Compatible with the OpenAI Responses API shape.</p>
-
-      <p class="schema-label">Response object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:              <span class="st">"resp_abc123"</span>,
-  <span class="hl">"conversation_id"</span>: <span class="st">"conv_xyz"</span>,
-  <span class="hl">"input"</span>:           <span class="st">"Summarise last week's sales data"</span>,
-  <span class="hl">"output"</span>:          [{ <span class="hl">"type"</span>: <span class="st">"text"</span>, <span class="hl">"text"</span>: <span class="st">"Here is the summary..."</span> }],
-  <span class="hl">"status"</span>:          <span class="st">"completed"</span>,  <span class="cm">// "in_progress" | "completed" | "failed"</span>
-  <span class="hl">"model"</span>:           <span class="st">"claude-opus-4-8"</span>,
-  <span class="hl">"usage"</span>:           { <span class="hl">"input_tokens"</span>: <span class="st">120</span>, <span class="hl">"output_tokens"</span>: <span class="st">340</span> },
-  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
-}</pre>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
-          <span class="method post">POST</span>
-          <span class="endpoint-path">/responses</span>
-          <span class="endpoint-desc">Create a streaming response</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">ID of the task to append the response to.</td></tr>
-            <tr><td class="p-name">input</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">User message text.</td></tr>
-            <tr><td class="p-name">stream</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>true</code>. Return server-sent events. Set to <code>false</code> for a single JSON response.</td></tr>
-            <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the agent model for this turn. Defaults to the project setting.</td></tr>
-            <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Skill IDs to activate for this turn.</td></tr>
-          </table>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/responses \
-  -H <span class="st">"Content-Type: application/json"</span> \
-  -d <span class="st">'{"conversation_id":"conv_xyz","input":"Summarise last week'\''s sales data","stream":true}'</span></pre>
-          </div>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path">/responses/in-flight-list</span>
-          <span class="endpoint-desc">List active streams</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific task.</td></tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path">/responses/in-flight</span>
-          <span class="endpoint-desc">Check a specific in-flight stream</span>
-        </div>
-        <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task whose active stream to retrieve.</td></tr>
-          </table>
-        </div>
-      </div>
+      <span class="burl-val burl-base">https://cowork.mindshub.ai/api/v1</span>
     </div>
 
     <!-- Tasks -->
@@ -647,7 +575,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/tasks \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","goal":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
@@ -707,6 +635,130 @@
           <span class="endpoint-desc">Delete a task and all its messages</span>
         </div>
       </div>
+
+      <h2 id="responses" style="font-size:16px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line);margin:40px 0 16px;padding-bottom:10px;">Streaming a task</h2>
+      <p class="section-desc">The <code>/responses</code> endpoints send a message into a task and stream the agent's reply. Compatible with the shape of the OpenAI Responses API. Turns run <strong>detached</strong> from the connection that started them — closing the tab does not stop the run. Reconnect at any time with <code>GET /responses/tail</code> and resume exactly where you left off, or replay the whole turn from the start with <code>from_seq=0</code>. Only an explicit <code>POST /responses/cancel</code> stops the run.</p>
+
+      <p class="schema-label">Non-streaming response</p>
+      <div class="code-block" style="margin-bottom:24px">
+        <div class="code-header"><span class="code-lang">json</span></div>
+        <pre>{
+  <span class="hl">"id"</span>:         <span class="st">"resp_abc123"</span>,
+  <span class="hl">"object"</span>:     <span class="st">"response"</span>,
+  <span class="hl">"status"</span>:     <span class="st">"completed"</span>,   <span class="cm">// "created" | "in_progress" | "completed"</span>
+  <span class="hl">"error"</span>:      <span class="st">null</span>,
+  <span class="hl">"model"</span>:      <span class="st">"claude-opus-4-8"</span>,
+  <span class="hl">"output"</span>: [
+    {
+      <span class="hl">"type"</span>:    <span class="st">"message"</span>,
+      <span class="hl">"id"</span>:      <span class="st">"msg_1"</span>,
+      <span class="hl">"status"</span>:  <span class="st">"completed"</span>,
+      <span class="hl">"role"</span>:    <span class="st">"assistant"</span>,
+      <span class="hl">"content"</span>: [{ <span class="hl">"type"</span>: <span class="st">"output_text"</span>, <span class="hl">"text"</span>: <span class="st">"Here is the summary..."</span> }]
+    }
+  ],
+  <span class="hl">"created_at"</span>: <span class="st">1750000000</span>
+}</pre>
+      </div>
+
+      <p class="schema-label">Streaming (SSE) events</p>
+      <div class="code-block" style="margin-bottom:24px">
+        <div class="code-header"><span class="code-lang">text</span></div>
+        <pre><span class="cm">data:</span> {"<span class="hl">type</span>":"<span class="st">response.created</span>","<span class="hl">sequence_number</span>":0,"<span class="hl">response</span>":{"id":"resp_abc123","status":"created","output":[]}}
+
+<span class="cm">data:</span> {"<span class="hl">type</span>":"<span class="st">response.output_text.delta</span>","<span class="hl">sequence_number</span>":1,"<span class="hl">response</span>":{"item_id":"msg_1","delta":"Here is "}}
+
+<span class="cm">data:</span> {"<span class="hl">type</span>":"<span class="st">response.completed</span>","<span class="hl">sequence_number</span>":2,"<span class="hl">response</span>":{"id":"resp_abc123","status":"completed","output":[<span class="cm">/* full message */</span>]}}</pre>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method post">POST</span>
+          <span class="endpoint-path">/responses</span>
+          <span class="endpoint-desc">Send a message and stream the reply</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Body</p>
+          <table class="params-table">
+            <tr><td class="p-name">conversation</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task/conversation ID to append to. Omit to start a new task — pass <code>project</code> or <code>project_id</code> to place it.</td></tr>
+            <tr><td class="p-name">input</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">User message text.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name for a new task, when <code>conversation</code> is omitted.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project ID for a new task, when <code>conversation</code> is omitted.</td></tr>
+            <tr><td class="p-name">stream</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>false</code>. Set <code>true</code> to receive the Server-Sent Events shown above; otherwise a single JSON response is returned once the turn completes.</td></tr>
+            <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's model for this turn only.</td></tr>
+            <tr><td class="p-name">reasoning_effort</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's reasoning effort for this turn only.</td></tr>
+            <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's default harness for this turn only (e.g. <code>anton</code>).</td></tr>
+          </table>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses \
+  -H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"conversation":"conv_xyz","input":"Summarise last week'\''s sales data","stream":true}'</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path">/responses/tail</span>
+          <span class="endpoint-desc">Resume a task's stream</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Reconnect to an in-flight (or just-finished) turn: replay from <code>from_seq</code>, then live-tail new output until the turn ends. Pass <code>from_seq=0</code> to replay a task's whole turn from the beginning, or the last sequence number you rendered to resume without re-rendering anything. 404 means no buffer is registered for this task — fall back to <code>GET /tasks/{id}/items</code> for the persisted history.</p>
+          <p class="schema-label">Query parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task/conversation to tail.</td></tr>
+            <tr><td class="p-name">from_seq</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>. Records with <code>seq &gt;= from_seq</code> are replayed, then the connection live-tails.</td></tr>
+          </table>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=0"</span>   <span class="cm"># from the start</span>
+<span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=12"</span>  <span class="cm"># resume from where you left off</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path">/responses/in-flight-list</span>
+          <span class="endpoint-desc">List every task with a stream currently running</span>
+        </div>
+        <div class="endpoint-body">
+          <p>No query parameters — returns every in-flight task visible to the caller, so a client can resync stream state across tabs or after a reload.</p>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path">/responses/in-flight</span>
+          <span class="endpoint-desc">Check whether a specific task has a stream running</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Query parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task whose active stream to check.</td></tr>
+          </table>
+          <p>Returns <code>latest_seq</code> — pass it as <code>from_seq</code> to <code>/responses/tail</code> to resume without re-rendering anything already shown, or <code>0</code> to replay from the start.</p>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method post">POST</span>
+          <span class="endpoint-path">/responses/cancel</span>
+          <span class="endpoint-desc">Stop a running task</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Closing the connection does not stop the run — only this does.</p>
+          <p class="schema-label">Body</p>
+          <table class="params-table">
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task to cancel.</td></tr>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- Projects -->
@@ -759,7 +811,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/projects \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
           </div>
@@ -926,7 +978,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/schedules \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/schedules \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","cron":"0 9 * * 1","prompt":"Generate weekly sales digest","timezone":"America/New_York"}'</span></pre>
           </div>
@@ -1017,7 +1069,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/files \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files \
   -F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
           </div>
@@ -1078,7 +1130,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/connectors/specs"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/specs"</span></pre>
           </div>
         </div>
       </div>
@@ -1112,7 +1164,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/connectors/connections"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/connections"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "spec_id": "postgres",
@@ -1185,8 +1237,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories"</span>               <span class="cm"># global</span>
-<span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span>               <span class="cm"># global</span>
+<span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
           </div>
         </div>
       </div>
@@ -1205,7 +1257,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content": "Always use Q3 targets as the baseline.", "project_id": "proj_xyz"}'</span></pre>
           </div>
@@ -1265,7 +1317,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/skills"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span></pre>
           </div>
         </div>
       </div>
@@ -1286,7 +1338,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/skills"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "name": "weekly-report",
@@ -1380,7 +1432,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads?conversation_id=..."</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads?conversation_id=..."</span></pre>
           </div>
         </div>
       </div>
@@ -1394,7 +1446,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation_id":"...","title":"Sales analysis draft","cells":[]}'</span></pre>
           </div>
@@ -1418,7 +1470,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}"</span> \
+            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"title":"Final analysis","saved":true}'</span></pre>
           </div>
@@ -1445,7 +1497,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"type":"code","language":"python","content":"df.head()"}'</span></pre>
           </div>
@@ -1461,7 +1513,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
+            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content":"df.tail(10)","index":2}'</span></pre>
           </div>
@@ -1478,7 +1530,7 @@
           <p>Runs the cell and streams output back as server-sent events. Each event carries a partial output object. Terminal event has <code>status: "success"</code> or <code>status: "error"</code>.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
           </div>
         </div>
       </div>
@@ -1525,7 +1577,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
           </div>
 
           <p class="schema-label">Response</p>
@@ -1608,7 +1660,7 @@
 
     var saved = null;
     try { saved = localStorage.getItem('cowork-docs-base'); } catch (e) {}
-    if (saved === 'hosted') setBase('hosted');
+    if (saved === 'local') setBase('local');
   })();
 </script>
 </body>
