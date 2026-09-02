@@ -155,7 +155,7 @@
     border: 1px solid var(--line);
     border-radius: var(--r-lg);
     padding: 14px 18px;
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     margin-bottom: 48px;
     font-family: var(--font-mono); font-size: 13px;
     position: sticky; top: 64px; z-index: 35;
@@ -321,8 +321,8 @@
     <div class="base-url">
       <span class="burl-label">Base URL</span>
       <div class="burl-toggle" role="group" aria-label="Choose base URL">
-        <button type="button" class="burl-opt active" data-base="hosted">Hosted</button>
-        <button type="button" class="burl-opt" data-base="local">Local</button>
+        <button type="button" class="burl-opt active" data-base="hosted">MindsHub Cloud</button>
+        <button type="button" class="burl-opt" data-base="local">Your Server</button>
       </div>
       <span class="burl-val burl-base">https://cowork.mindshub.ai/api/v1</span>
     </div>
