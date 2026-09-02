@@ -1952,6 +1952,21 @@
     "tools": ["sql_query", "send_email"]
   }'</span></pre>
           </div>
+<p class="schema-label">Response — Skill object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:            <span class="st">"skill_abc123"</span>,
+  <span class="hl">"name"</span>:          <span class="st">"weekly-report"</span>,
+  <span class="hl">"description"</span>:   <span class="st">"Generates a weekly performance report."</span>,
+  <span class="hl">"instructions"</span>:  <span class="st">"Always start with an executive summary. Limit to 3 charts."</span>,
+  <span class="hl">"tools"</span>: [
+    <span class="st">"sql_query"</span>,
+    <span class="st">"send_email"</span>
+  ],
+  <span class="hl">"created_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
             </div>
           </div>
         </div>
@@ -1964,13 +1979,40 @@
           <span class="endpoint-desc">Update a skill</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New identifier.</td></tr>
             <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Updated summary.</td></tr>
             <tr><td class="p-name">instructions</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Revised prompt instructions.</td></tr>
             <tr><td class="p-name">tools</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replace the full list of allowed tools.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X PATCH <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills/skill_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"description":"Generates a weekly performance report, now with YoY deltas."}'</span></pre>
+          </div>
+<p class="schema-label">Response — Skill object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:            <span class="st">"skill_abc123"</span>,
+  <span class="hl">"name"</span>:          <span class="st">"weekly-report"</span>,
+  <span class="hl">"description"</span>:   <span class="st">"Generates a weekly performance report."</span>,
+  <span class="hl">"instructions"</span>:  <span class="st">"Always start with an executive summary. Limit to 3 charts."</span>,
+  <span class="hl">"tools"</span>: [
+    <span class="st">"sql_query"</span>,
+    <span class="st">"send_email"</span>
+  ],
+  <span class="hl">"created_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1979,6 +2021,26 @@
           <span class="method delete">DELETE</span>
           <span class="endpoint-path" data-path="/skills/{id}">https://cowork.mindshub.ai/api/v1/skills/{id}</span>
           <span class="endpoint-desc">Delete a skill</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Skill ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills/skill_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
