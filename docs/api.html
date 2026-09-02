@@ -175,6 +175,17 @@
   }
   .burl-opt:hover { color: var(--ink-2); }
   .burl-opt.active { color: #080d18; background: var(--accent); }
+  .burl-key {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: #080d18; background: var(--accent);
+    border-radius: var(--r); padding: 6px 12px;
+    white-space: nowrap;
+    transition: opacity 120ms;
+  }
+  .burl-key:hover { opacity: 0.85; }
+  .burl-key[hidden] { display: none; }
 
   /* ── Section ── */
   .api-section { margin-bottom: 56px; scroll-margin-top: 80px; }
@@ -325,6 +336,7 @@
         <button type="button" class="burl-opt" data-base="local">Your Server</button>
       </div>
       <span class="burl-val burl-base">https://cowork.mindshub.ai/api/v1</span>
+      <a href="https://console.mindshub.ai/apiKeys" target="_blank" rel="noopener" class="burl-key">Get API Key</a>
     </div>
 
     <!-- ERD -->
@@ -1525,12 +1537,14 @@
     var buttons = document.querySelectorAll('.burl-opt');
     var targets = document.querySelectorAll('.burl-base');
     var paths = document.querySelectorAll('.endpoint-path');
+    var keyButton = document.querySelector('.burl-key');
 
     function setBase(which) {
       var val = which === 'hosted' ? HOSTED : LOCAL;
       targets.forEach(function(el) { el.textContent = val; });
       paths.forEach(function(el) { el.textContent = val + el.dataset.path; });
       buttons.forEach(function(b) { b.classList.toggle('active', b.dataset.base === which); });
+      if (keyButton) keyButton.hidden = which !== 'hosted';
       try { localStorage.setItem('cowork-docs-base', which); } catch (e) {}
     }
 
