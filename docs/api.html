@@ -334,9 +334,6 @@
           <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
             <path d="M1.5,1.5 L7,4.5 L1.5,7.5" stroke="#3A4F6E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </marker>
-          <marker id="ah-d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-            <path d="M1.5,1.5 L7,4.5 L1.5,7.5" stroke="#2A3957" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </marker>
         </defs>
 
         <!-- ── Relationship lines (drawn behind boxes) ── -->
@@ -357,10 +354,6 @@
         <!-- Task → Scratchpad -->
         <path d="M 385,76 C 385,115 325,115 325,150" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="352" y="112" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
-
-        <!-- Project → Memory (optional, dashed 0..N) -->
-        <path d="M 240,76 C 240,92 590,92 590,105" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
-        <text x="400" y="86" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E" text-anchor="middle">0..N</text>
 
         <!-- ── Entity boxes ── -->
 
@@ -428,19 +421,15 @@
         </a>
 
         <!-- ── Legend (horizontal band, clear of the resources group) ── -->
-        <rect x="80" y="214" width="480" height="32" rx="6" fill="rgba(8,13,24,0.88)" stroke="#2A3957" stroke-width="1" stroke-dasharray="4,3"/>
+        <rect x="80" y="214" width="360" height="32" rx="6" fill="rgba(8,13,24,0.88)" stroke="#2A3957" stroke-width="1" stroke-dasharray="4,3"/>
         <text x="96" y="234" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="600" fill="#3A465E" letter-spacing="0.12em">LEGEND</text>
         <!-- owns 1..N -->
         <line x1="180" y1="230" x2="200" y2="230" stroke="#2A3957" stroke-width="1.5"/>
         <path d="M195.5,227.5 L200,230 L195.5,232.5" stroke="#3A4F6E" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <text x="206" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">owns  1..N</text>
-        <!-- optional -->
-        <line x1="300" y1="230" x2="320" y2="230" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="4,2"/>
-        <path d="M315.5,227.5 L320,230 L315.5,232.5" stroke="#2A3957" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="326" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">optional</text>
         <!-- independent -->
-        <rect x="400" y="223" width="16" height="14" rx="3" fill="none" stroke="#2A3957" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="422" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">independent / global</text>
+        <rect x="280" y="223" width="16" height="14" rx="3" fill="none" stroke="#2A3957" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="302" y="234" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">independent / global</text>
       </svg>
     </div>
 
