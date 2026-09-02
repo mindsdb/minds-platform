@@ -529,20 +529,6 @@
       <h2>Tasks</h2>
       <p class="section-desc">Manage tasks. Each task holds an ordered list of messages exchanged with the agent. <strong>Tasks and Conversations are the same concept</strong> — every task is a conversation with a goal and an assigned agent, and the same objects are available at <code>/tasks</code> and <code>/conversations</code>.</p>
 
-      <p class="schema-label">Task object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:           <span class="st">"task_abc123"</span>,
-  <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,           <span class="cm">// null if not project-scoped</span>
-  <span class="hl">"title"</span>:        <span class="st">"Q2 analysis"</span>,
-  <span class="hl">"goal"</span>:         <span class="st">"Analyse Q2 revenue by region"</span>,  <span class="cm">// task prompt, optional</span>
-  <span class="hl">"status"</span>:       <span class="st">"active"</span>,             <span class="cm">// "active" | "archived"</span>
-  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:04:12Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method post">POST</span>
@@ -593,6 +579,19 @@
           <table class="params-table">
             <tr><td class="p-name">id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task ID.</td></tr>
           </table>
+          <p class="schema-label">Response — Task object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:           <span class="st">"task_abc123"</span>,
+  <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,           <span class="cm">// null if not project-scoped</span>
+  <span class="hl">"title"</span>:        <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"goal"</span>:         <span class="st">"Analyse Q2 revenue by region"</span>,  <span class="cm">// task prompt, optional</span>
+  <span class="hl">"status"</span>:       <span class="st">"active"</span>,             <span class="cm">// "active" | "archived"</span>
+  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:04:12Z"</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -766,20 +765,6 @@
       <h2>Projects</h2>
       <p class="section-desc">Projects are workspaces that group tasks, files, and artifacts.</p>
 
-      <p class="schema-label">Project object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:             <span class="st">"proj_abc123"</span>,
-  <span class="hl">"name"</span>:           <span class="st">"Sales Automation"</span>,
-  <span class="hl">"description"</span>:    <span class="st">"Weekly reporting flows"</span>,
-  <span class="hl">"connector_ids"</span>:  [<span class="st">"conn_001"</span>, <span class="st">"conn_002"</span>],
-  <span class="hl">"skill_ids"</span>:      [<span class="st">"skill_abc"</span>],
-  <span class="hl">"created_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method post">POST</span>
@@ -815,6 +800,19 @@
             <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
             <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>.</td></tr>
           </table>
+          <p class="schema-label">Response — Project object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:             <span class="st">"proj_abc123"</span>,
+  <span class="hl">"name"</span>:           <span class="st">"Sales Automation"</span>,
+  <span class="hl">"description"</span>:    <span class="st">"Weekly reporting flows"</span>,
+  <span class="hl">"connector_ids"</span>:  [<span class="st">"conn_001"</span>, <span class="st">"conn_002"</span>],
+  <span class="hl">"skill_ids"</span>:      [<span class="st">"skill_abc"</span>],
+  <span class="hl">"created_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -849,20 +847,6 @@
       <h2>Artifacts</h2>
       <p class="section-desc"><strong>Artifacts are mini apps</strong> — web apps, dashboards, reports, and documents generated by the agent and hosted within a project. Each artifact belongs to a project.</p>
 
-      <p class="schema-label">Artifact object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:          <span class="st">"art_abc123"</span>,
-  <span class="hl">"project_id"</span>:  <span class="st">"proj_xyz"</span>,
-  <span class="hl">"title"</span>:       <span class="st">"Sales Dashboard"</span>,
-  <span class="hl">"type"</span>:        <span class="st">"app"</span>,      <span class="cm">// "app" | "report" | "doc" | "dashboard"</span>
-  <span class="hl">"path"</span>:        <span class="st">"sales_dashboard/index.html"</span>,  <span class="cm">// relative path within project</span>
-  <span class="hl">"created_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
@@ -876,6 +860,19 @@
             <tr><td class="p-name">type</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>app</code>, <code>report</code>, <code>doc</code>, or <code>dashboard</code>.</td></tr>
             <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
           </table>
+          <p class="schema-label">Response — Artifact object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:          <span class="st">"art_abc123"</span>,
+  <span class="hl">"project_id"</span>:  <span class="st">"proj_xyz"</span>,
+  <span class="hl">"title"</span>:       <span class="st">"Sales Dashboard"</span>,
+  <span class="hl">"type"</span>:        <span class="st">"app"</span>,      <span class="cm">// "app" | "report" | "doc" | "dashboard"</span>
+  <span class="hl">"path"</span>:        <span class="st">"sales_dashboard/index.html"</span>,  <span class="cm">// relative path within project</span>
+  <span class="hl">"created_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -929,23 +926,6 @@
       <h2>Schedules</h2>
       <p class="section-desc">Run tasks on a cron schedule. Schedules belong to a project and trigger a task or workflow automatically.</p>
 
-      <p class="schema-label">Schedule object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:              <span class="st">"sched_abc123"</span>,
-  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,
-  <span class="hl">"cron"</span>:            <span class="st">"0 9 * * 1"</span>,       <span class="cm">// standard 5-field cron expression</span>
-  <span class="hl">"timezone"</span>:        <span class="st">"America/New_York"</span>,
-  <span class="hl">"prompt"</span>:          <span class="st">"Generate weekly sales digest"</span>,
-  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null = create new task each run</span>
-  <span class="hl">"status"</span>:          <span class="st">"active"</span>,         <span class="cm">// "active" | "paused"</span>
-  <span class="hl">"last_run_at"</span>:     <span class="st">"2026-06-09T09:00:00Z"</span>,
-  <span class="hl">"next_run_at"</span>:     <span class="st">"2026-06-16T09:00:00Z"</span>,
-  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-01T00:00:00Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
@@ -958,6 +938,22 @@
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
             <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
           </table>
+          <p class="schema-label">Response — Schedule object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:              <span class="st">"sched_abc123"</span>,
+  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,
+  <span class="hl">"cron"</span>:            <span class="st">"0 9 * * 1"</span>,       <span class="cm">// standard 5-field cron expression</span>
+  <span class="hl">"timezone"</span>:        <span class="st">"America/New_York"</span>,
+  <span class="hl">"prompt"</span>:          <span class="st">"Generate weekly sales digest"</span>,
+  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null = create new task each run</span>
+  <span class="hl">"status"</span>:          <span class="st">"active"</span>,         <span class="cm">// "active" | "paused"</span>
+  <span class="hl">"last_run_at"</span>:     <span class="st">"2026-06-09T09:00:00Z"</span>,
+  <span class="hl">"next_run_at"</span>:     <span class="st">"2026-06-16T09:00:00Z"</span>,
+  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-01T00:00:00Z"</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -1024,20 +1020,6 @@
       <h2>Files</h2>
       <p class="section-desc">Upload and manage files that the agent can read, search, and reference. Files can be attached to a project or to individual tasks.</p>
 
-      <p class="schema-label">File object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:              <span class="st">"file_abc123"</span>,
-  <span class="hl">"name"</span>:            <span class="st">"Q2-report.pdf"</span>,
-  <span class="hl">"mime_type"</span>:       <span class="st">"application/pdf"</span>,
-  <span class="hl">"size"</span>:            <span class="st">204800</span>,           <span class="cm">// bytes</span>
-  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,       <span class="cm">// null if task-scoped only</span>
-  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null if project-scoped only</span>
-  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method post">POST</span>
@@ -1073,6 +1055,19 @@
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
             <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
           </table>
+          <p class="schema-label">Response — File object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:              <span class="st">"file_abc123"</span>,
+  <span class="hl">"name"</span>:            <span class="st">"Q2-report.pdf"</span>,
+  <span class="hl">"mime_type"</span>:       <span class="st">"application/pdf"</span>,
+  <span class="hl">"size"</span>:            <span class="st">204800</span>,           <span class="cm">// bytes</span>
+  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,       <span class="cm">// null if task-scoped only</span>
+  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null if project-scoped only</span>
+  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -1090,10 +1085,21 @@
       <h2>Connectors</h2>
       <p class="section-desc">Integrate external data sources. Connectors exist independently of any project but can be referenced inside any project. They are defined by <strong>specs</strong> (the connector type, e.g. PostgreSQL, Snowflake, Google Sheets) and instantiated as <strong>connections</strong> with encrypted credentials. Credentials are write-only — never returned after creation.</p>
 
-      <p class="schema-label">ConnectorSpec object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path" data-path="/connectors/specs">https://cowork.mindshub.ai/api/v1/connectors/specs</span>
+          <span class="endpoint-desc">List available connector specs</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/specs"</span></pre>
+          </div>
+          <p class="schema-label">Response — ConnectorSpec object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
   <span class="hl">"id"</span>:           <span class="st">"postgres"</span>,
   <span class="hl">"name"</span>:         <span class="st">"PostgreSQL"</span>,
   <span class="hl">"description"</span>:  <span class="st">"Connect to any PostgreSQL-compatible database."</span>,
@@ -1106,31 +1112,6 @@
     { <span class="hl">"key"</span>: <span class="st">"password"</span>, <span class="hl">"label"</span>: <span class="st">"Password"</span>, <span class="hl">"secret"</span>: <span class="st">true</span>  }
   ]
 }</pre>
-      </div>
-
-      <p class="schema-label">Connection object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:         <span class="st">"conn_abc123"</span>,
-  <span class="hl">"spec_id"</span>:    <span class="st">"postgres"</span>,       <span class="cm">// which ConnectorSpec this uses</span>
-  <span class="hl">"name"</span>:       <span class="st">"prod-db"</span>,
-  <span class="hl">"status"</span>:     <span class="st">"connected"</span>,      <span class="cm">// "connected" | "error" | "pending"</span>
-  <span class="hl">"created_at"</span>: <span class="st">"2026-06-11T10:00:00Z"</span>
-  <span class="cm">// credentials are never returned</span>
-}</pre>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path" data-path="/connectors/specs">https://cowork.mindshub.ai/api/v1/connectors/specs</span>
-          <span class="endpoint-desc">List available connector specs</span>
-        </div>
-        <div class="endpoint-body">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/specs"</span></pre>
           </div>
         </div>
       </div>
@@ -1146,6 +1127,18 @@
           <table class="params-table">
             <tr><td class="p-name">spec_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by connector type (e.g. <code>postgres</code>).</td></tr>
           </table>
+          <p class="schema-label">Response — Connection object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:         <span class="st">"conn_abc123"</span>,
+  <span class="hl">"spec_id"</span>:    <span class="st">"postgres"</span>,       <span class="cm">// which ConnectorSpec this uses</span>
+  <span class="hl">"name"</span>:       <span class="st">"prod-db"</span>,
+  <span class="hl">"status"</span>:     <span class="st">"connected"</span>,      <span class="cm">// "connected" | "error" | "pending"</span>
+  <span class="hl">"created_at"</span>: <span class="st">"2026-06-11T10:00:00Z"</span>
+  <span class="cm">// credentials are never returned</span>
+}</pre>
+          </div>
         </div>
       </div>
 
@@ -1210,19 +1203,6 @@
       <h2>Memories</h2>
       <p class="section-desc">Persistent facts and context the agent retains across tasks. Memories can be <strong>global</strong> (shared across all projects and tasks) or <strong>project-scoped</strong> — omit <code>project_id</code> to create a global memory. The agent automatically surfaces relevant memories as context at the start of each task.</p>
 
-      <p class="schema-label">Memory object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:           <span class="st">"mem_abc123"</span>,
-  <span class="hl">"content"</span>:      <span class="st">"Prefers executive summaries under 200 words."</span>,
-  <span class="hl">"project_id"</span>:   <span class="st">null</span>,            <span class="cm">// null = global; string = project-scoped</span>
-  <span class="hl">"source"</span>:       <span class="st">"user"</span>,          <span class="cm">// "user" | "agent" — who created it</span>
-  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
@@ -1239,6 +1219,18 @@
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span>               <span class="cm"># global</span>
 <span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
+          </div>
+          <p class="schema-label">Response — Memory object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:           <span class="st">"mem_abc123"</span>,
+  <span class="hl">"content"</span>:      <span class="st">"Prefers executive summaries under 200 words."</span>,
+  <span class="hl">"project_id"</span>:   <span class="st">null</span>,            <span class="cm">// null = global; string = project-scoped</span>
+  <span class="hl">"source"</span>:       <span class="st">"user"</span>,          <span class="cm">// "user" | "agent" — who created it</span>
+  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
           </div>
         </div>
       </div>
@@ -1291,10 +1283,21 @@
       <h2>Skills</h2>
       <p class="section-desc">Reusable capabilities available globally across all projects — custom instructions, tools, or prompt templates the agent can invoke. Skills extend what the agent knows how to do without re-explaining it each time. Like Connectors, they exist independently of any single project.</p>
 
-      <p class="schema-label">Skill object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method get">GET</span>
+          <span class="endpoint-path" data-path="/skills">https://cowork.mindshub.ai/api/v1/skills</span>
+          <span class="endpoint-desc">List all skills</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span></pre>
+          </div>
+          <p class="schema-label">Response — Skill object</p>
+          <div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
   <span class="hl">"id"</span>:            <span class="st">"skill_abc123"</span>,
   <span class="hl">"name"</span>:          <span class="st">"weekly-report"</span>,
   <span class="hl">"description"</span>:   <span class="st">"Generates a weekly performance report from connected data sources."</span>,
@@ -1306,18 +1309,6 @@
   <span class="hl">"created_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>,
   <span class="hl">"updated_at"</span>:    <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
-      </div>
-
-      <div class="endpoint">
-        <div class="endpoint-header">
-          <span class="method get">GET</span>
-          <span class="endpoint-path" data-path="/skills">https://cowork.mindshub.ai/api/v1/skills</span>
-          <span class="endpoint-desc">List all skills</span>
-        </div>
-        <div class="endpoint-body">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span></pre>
           </div>
         </div>
       </div>
@@ -1380,49 +1371,6 @@
       <h2>Scratchpads</h2>
       <p class="section-desc">Notebook-style workspaces scoped to a task. A scratchpad is made up of ordered <strong>cells</strong> — the agent writes to cells as it reasons, drafts, and executes code. Each cell has a type (<code>markdown</code>, <code>code</code>, or <code>output</code>) and tracks its own execution state. Scratchpads persist for the lifetime of the task and can be promoted to an Artifact.</p>
 
-      <h2 style="font-size:14px;font-weight:600;color:var(--ink-3);border:none;margin:0 0 16px;padding:0;letter-spacing:0.04em;">Scratchpad object</h2>
-      <div class="code-block" style="margin-bottom:32px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:              <span class="st">"sp_abc123"</span>,
-  <span class="hl">"conversation_id"</span>: <span class="st">"conv_xyz"</span>,
-  <span class="hl">"title"</span>:           <span class="st">"Sales analysis draft"</span>,
-  <span class="hl">"cells"</span>:           <span class="cm">[ /* ordered array of Cell objects */</span> ],
-  <span class="hl">"saved"</span>:           <span class="st">false</span>,     <span class="cm">// true once promoted / pinned</span>
-  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:      <span class="st">"2026-06-11T10:04:12Z"</span>
-}</pre>
-      </div>
-
-      <h2 style="font-size:14px;font-weight:600;color:var(--ink-3);border:none;margin:0 0 16px;padding:0;letter-spacing:0.04em;">Cell object</h2>
-      <div class="code-block" style="margin-bottom:8px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"id"</span>:        <span class="st">"cell_001"</span>,
-  <span class="hl">"type"</span>:      <span class="st">"code"</span>,          <span class="cm">// "markdown" | "code" | "output"</span>
-  <span class="hl">"content"</span>:   <span class="st">"df.describe()"</span>,
-  <span class="hl">"language"</span>:  <span class="st">"python"</span>,        <span class="cm">// present when type = "code"</span>
-  <span class="hl">"status"</span>:    <span class="st">"success"</span>,       <span class="cm">// "pending" | "running" | "success" | "error"</span>
-  <span class="hl">"outputs"</span>:   [                 <span class="cm">// present when type = "output"</span>
-    {
-      <span class="hl">"mime"</span>:    <span class="st">"text/plain"</span>,
-      <span class="hl">"data"</span>:    <span class="st">"count    12.0\nmean     4.2\n..."</span>
-    },
-    {
-      <span class="hl">"mime"</span>:    <span class="st">"image/png"</span>,
-      <span class="hl">"data"</span>:    <span class="st">"data:image/png;base64,..."</span>
-    }
-  ],
-  <span class="hl">"error"</span>:     <span class="st">null</span>,            <span class="cm">// error message when status = "error"</span>
-  <span class="hl">"index"</span>:     <span class="st">0</span>                 <span class="cm">// display order within the scratchpad</span>
-}</pre>
-      </div>
-      <p class="section-desc" style="margin-bottom:32px;font-size:12.5px">
-        <strong>type</strong> — <code>markdown</code> cells are prose written by the agent; <code>code</code> cells are executable snippets; <code>output</code> cells are the results attached to the preceding code cell (stdout, images, tables).<br>
-        <strong>status</strong> — only relevant on <code>code</code> cells. <code>pending</code> means queued, <code>running</code> means currently executing, <code>success</code>/<code>error</code> are terminal states.<br>
-        <strong>outputs</strong> — multi-modal: a single code cell can produce several output objects with different MIME types (plain text, HTML, PNG charts, JSON).
-      </p>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
@@ -1458,6 +1406,50 @@
           <span class="method get">GET</span>
           <span class="endpoint-path" data-path="/scratchpads/{scratchpad_id}">https://cowork.mindshub.ai/api/v1/scratchpads/{scratchpad_id}</span>
           <span class="endpoint-desc">Get a scratchpad with all cells</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Response — Scratchpad object</p>
+          <div class="code-block" style="margin-bottom:24px">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:              <span class="st">"sp_abc123"</span>,
+  <span class="hl">"conversation_id"</span>: <span class="st">"conv_xyz"</span>,
+  <span class="hl">"title"</span>:           <span class="st">"Sales analysis draft"</span>,
+  <span class="hl">"cells"</span>:           <span class="cm">[ /* ordered array of Cell objects */</span> ],
+  <span class="hl">"saved"</span>:           <span class="st">false</span>,     <span class="cm">// true once promoted / pinned</span>
+  <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:      <span class="st">"2026-06-11T10:04:12Z"</span>
+}</pre>
+          </div>
+
+          <p class="schema-label">Cell object</p>
+          <div class="code-block" style="margin-bottom:8px">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:        <span class="st">"cell_001"</span>,
+  <span class="hl">"type"</span>:      <span class="st">"code"</span>,          <span class="cm">// "markdown" | "code" | "output"</span>
+  <span class="hl">"content"</span>:   <span class="st">"df.describe()"</span>,
+  <span class="hl">"language"</span>:  <span class="st">"python"</span>,        <span class="cm">// present when type = "code"</span>
+  <span class="hl">"status"</span>:    <span class="st">"success"</span>,       <span class="cm">// "pending" | "running" | "success" | "error"</span>
+  <span class="hl">"outputs"</span>:   [                 <span class="cm">// present when type = "output"</span>
+    {
+      <span class="hl">"mime"</span>:    <span class="st">"text/plain"</span>,
+      <span class="hl">"data"</span>:    <span class="st">"count    12.0\nmean     4.2\n..."</span>
+    },
+    {
+      <span class="hl">"mime"</span>:    <span class="st">"image/png"</span>,
+      <span class="hl">"data"</span>:    <span class="st">"data:image/png;base64,..."</span>
+    }
+  ],
+  <span class="hl">"error"</span>:     <span class="st">null</span>,            <span class="cm">// error message when status = "error"</span>
+  <span class="hl">"index"</span>:     <span class="st">0</span>                 <span class="cm">// display order within the scratchpad</span>
+}</pre>
+          </div>
+          <p style="font-size:12.5px;color:var(--ink-3)">
+            <strong>type</strong> — <code>markdown</code> cells are prose written by the agent; <code>code</code> cells are executable snippets; <code>output</code> cells are the results attached to the preceding code cell (stdout, images, tables).<br>
+            <strong>status</strong> — only relevant on <code>code</code> cells. <code>pending</code> means queued, <code>running</code> means currently executing, <code>success</code>/<code>error</code> are terminal states.<br>
+            <strong>outputs</strong> — multi-modal: a single code cell can produce several output objects with different MIME types (plain text, HTML, PNG charts, JSON).
+          </p>
         </div>
       </div>
 
@@ -1548,19 +1540,6 @@
       <h2>Search</h2>
       <p class="section-desc">Full-text and semantic search across tasks, artifacts, files, and memories. Returns ranked results with the matching resource type and a short excerpt.</p>
 
-      <p class="schema-label">SearchResult object</p>
-      <div class="code-block" style="margin-bottom:24px">
-        <div class="code-header"><span class="code-lang">json</span></div>
-        <pre>{
-  <span class="hl">"type"</span>:       <span class="st">"conversation"</span>,   <span class="cm">// "conversation" | "artifact" | "file" | "memory"</span>
-  <span class="hl">"id"</span>:         <span class="st">"conv_abc123"</span>,
-  <span class="hl">"title"</span>:      <span class="st">"Sales forecast Q3"</span>,
-  <span class="hl">"excerpt"</span>:    <span class="st">"...the Q3 sales forecast shows a 12% increase over..."</span>,
-  <span class="hl">"score"</span>:      <span class="st">0.93</span>,             <span class="cm">// relevance score 0–1</span>
-  <span class="hl">"project_id"</span>: <span class="st">"proj_xyz"</span>        <span class="cm">// null for global results</span>
-}</pre>
-      </div>
-
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
@@ -1580,8 +1559,8 @@
             <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
           </div>
 
-          <p class="schema-label">Response</p>
-          <div class="code-block">
+          <p class="schema-label">Response — SearchResult objects</p>
+          <div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"results"</span>: [
