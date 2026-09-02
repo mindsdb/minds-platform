@@ -186,6 +186,7 @@
   }
   .burl-key:hover { opacity: 0.85; }
   .burl-key[hidden] { display: none; }
+  .burl-auth-line[hidden] { display: none; }
 
   /* ── Section ── */
   .api-section { margin-bottom: 56px; scroll-margin-top: 80px; }
@@ -467,7 +468,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","topic":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
@@ -648,7 +650,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation":"conv_xyz","input":"Summarise last week'\''s sales data","stream":true}'</span></pre>
           </div>
@@ -670,8 +673,10 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=0"</span>   <span class="cm"># from the start</span>
-<span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=12"</span>  <span class="cm"># resume from where you left off</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=0"</span>   <span class="cm"># from the start</span>
+<span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=12"</span>  <span class="cm"># resume from where you left off</span></pre>
           </div>
         </div>
       </div>
@@ -739,7 +744,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
           </div>
@@ -932,7 +938,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/schedules \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/schedules \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","cron":"0 9 * * 1","prompt":"Generate weekly sales digest","timezone":"America/New_York"}'</span></pre>
           </div>
@@ -994,7 +1001,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files \
   -F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
           </div>
@@ -1052,7 +1060,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/specs"</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/specs"</span></pre>
           </div>
           <p class="schema-label">Response — ConnectorSpec object</p>
           <div class="code-block" style="margin-bottom:0">
@@ -1115,7 +1124,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/connections"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/connections"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "spec_id": "postgres",
@@ -1175,8 +1185,10 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span>               <span class="cm"># global</span>
-<span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span>               <span class="cm"># global</span>
+<span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
           </div>
           <p class="schema-label">Response — Memory object</p>
           <div class="code-block" style="margin-bottom:0">
@@ -1207,7 +1219,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content": "Always use Q3 targets as the baseline.", "project_id": "proj_xyz"}'</span></pre>
           </div>
@@ -1250,7 +1263,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span></pre>
           </div>
           <p class="schema-label">Response — Skill object</p>
           <div class="code-block" style="margin-bottom:0">
@@ -1287,7 +1301,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "name": "weekly-report",
@@ -1338,7 +1353,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads?conversation_id=..."</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads?conversation_id=..."</span></pre>
           </div>
         </div>
       </div>
@@ -1352,7 +1368,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation_id":"...","title":"Sales analysis draft","cells":[]}'</span></pre>
           </div>
@@ -1420,7 +1437,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"title":"Final analysis","saved":true}'</span></pre>
           </div>
@@ -1447,7 +1465,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"type":"code","language":"python","content":"df.head()"}'</span></pre>
           </div>
@@ -1463,7 +1482,8 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X PATCH <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content":"df.tail(10)","index":2}'</span></pre>
           </div>
@@ -1480,7 +1500,8 @@
           <p>Runs the cell and streams output back as server-sent events. Each event carries a partial output object. Terminal event has <code>status: "success"</code> or <code>status: "error"</code>.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
           </div>
         </div>
       </div>
@@ -1514,7 +1535,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
+            <pre><span class="hl">curl</span> <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span><span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
           </div>
 
           <p class="schema-label">Response — SearchResult objects</p>
@@ -1585,6 +1607,7 @@
     var targets = document.querySelectorAll('.burl-base');
     var paths = document.querySelectorAll('.endpoint-path');
     var keyButton = document.querySelector('.burl-key');
+    var authLines = document.querySelectorAll('.burl-auth-line');
 
     function setBase(which) {
       var val = which === 'hosted' ? HOSTED : LOCAL;
@@ -1592,6 +1615,7 @@
       paths.forEach(function(el) { el.textContent = val + el.dataset.path; });
       buttons.forEach(function(b) { b.classList.toggle('active', b.dataset.base === which); });
       if (keyButton) keyButton.hidden = which !== 'hosted';
+      authLines.forEach(function(el) { el.hidden = which !== 'hosted'; });
       try { localStorage.setItem('cowork-docs-base', which); } catch (e) {}
     }
 
