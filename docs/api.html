@@ -2,21 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>API Reference — MindsHub Cowork Docs</title>
+<title>Tasks API Reference — MindsHub Cowork Docs</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="REST API reference for MindsHub Cowork. Endpoints for conversations, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads." />
-<meta name="keywords" content="MindsHub Cowork API, REST API, AI agent API, conversations API, projects API, artifacts API, schedules API, connectors API" />
+<meta name="description" content="Tasks API reference for MindsHub Cowork — send tasks to agents over REST. Endpoints for tasks, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads. Runs local or hosted." />
+<meta name="keywords" content="MindsHub Cowork API, Tasks API, REST API, AI agent API, tasks API, projects API, artifacts API, schedules API, connectors API" />
 <meta name="robots" content="index, follow" />
 <meta name="author" content="MindsHub" />
-<meta property="og:title" content="API Reference — MindsHub Cowork" />
-<meta property="og:description" content="REST API reference for MindsHub Cowork. Endpoints for conversations, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads." />
+<meta property="og:title" content="Tasks API — MindsHub Cowork" />
+<meta property="og:description" content="Tasks API reference for MindsHub Cowork — send tasks to agents over REST. Endpoints for tasks, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads. Runs local or hosted." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="MindsHub Cowork" />
 <meta property="og:image" content="favicon.png" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:site" content="@MindsDB" />
-<meta name="twitter:title" content="API Reference — MindsHub Cowork" />
-<meta name="twitter:description" content="REST API reference for MindsHub Cowork. Endpoints for conversations, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads." />
+<meta name="twitter:title" content="Tasks API — MindsHub Cowork" />
+<meta name="twitter:description" content="Tasks API reference for MindsHub Cowork — send tasks to agents over REST. Endpoints for tasks, projects, artifacts, schedules, files, connectors, memories, skills, and scratchpads. Runs local or hosted." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -183,6 +183,15 @@
     color: var(--ink-4); white-space: nowrap;
   }
   .base-url .burl-val { color: var(--accent); }
+  .burl-toggle { display: flex; gap: 2px; background: var(--surface-3); border: 1px solid var(--line-2); border-radius: var(--r); padding: 2px; }
+  .burl-opt {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-4); background: none; border: none; border-radius: 4px;
+    padding: 3px 10px; cursor: pointer; transition: color 120ms, background 120ms;
+  }
+  .burl-opt:hover { color: var(--ink-2); }
+  .burl-opt.active { color: #080d18; background: var(--accent); }
 
   /* ── Section ── */
   .api-section { margin-bottom: 56px; scroll-margin-top: 80px; }
@@ -279,7 +288,6 @@
     <div class="nav-links">
       <a href="index.html">Docs</a>
       <a href="setup.html">Setup</a>
-      <a href="use-cases.html">Use Cases</a>
       <a href="api.html" class="active">API</a>
       <a href="https://docs.mindshub.ai/inference/">Hosted API</a>
       <a href="https://github.com/mindsdb/mindshub">GitHub ↗</a>
@@ -307,7 +315,7 @@
     <ul>
       <li><a href="#overview">Overview</a></li>
       <li><a href="#responses">Responses</a></li>
-      <li><a href="#conversations">Conversations</a></li>
+      <li><a href="#tasks">Tasks</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#artifacts">Artifacts</a></li>
       <li><a href="#schedules">Schedules</a></li>
@@ -322,23 +330,24 @@
 
   <main class="content">
     <div class="eyebrow">API Reference</div>
-    <h1 id="overview">REST API</h1>
+    <h1 id="overview">Tasks API</h1>
     <p class="lede">
-      The Cowork server exposes a versioned REST API at <code>/api/v1</code>.
-      All endpoints return JSON.
+      Send tasks to agents. The Cowork server exposes the Tasks API — a versioned REST API at
+      <code>/api/v1</code>. All endpoints return JSON.
     </p>
 
     <div class="local-note">
-      <div class="ln-head">This page documents the local Cowork server</div>
+      <div class="ln-head">Run it locally or hosted</div>
       <p>
-        Every endpoint below belongs to the Cowork server that runs on your own machine, at
-        <code>http://localhost:26866/api/v1</code>. It takes no API key and it is not reachable
-        over the internet.
+        Every endpoint below is the same Tasks API whether you run the Cowork server yourself at
+        <code><span class="burl-base">http://localhost:26866/api/v1</span></code> (no API key, not reachable over the internet)
+        or use MindsHub's hosted instance at <code>https://cowork.mindshub.ai/api/v1</code> (an
+        API key is required). Use the toggle below to switch every example on this page.
       </p>
       <p>
-        The hosted MindsHub API is a different service. It runs at <code>api.mindshub.ai</code>,
-        it needs an API key, and it is documented separately:
-        <a href="https://docs.mindshub.ai/inference/" target="_blank" rel="noopener">hosted MindsHub API docs ↗</a>.
+        This is a different service from the hosted MindsHub Inference API, which runs at
+        <code>api.mindshub.ai</code> and is documented separately:
+        <a href="https://docs.mindshub.ai/inference/" target="_blank" rel="noopener">hosted MindsHub Inference API docs ↗</a>.
       </p>
     </div>
 
@@ -356,7 +365,7 @@
 
         <!-- ── Relationship lines (drawn behind boxes) ── -->
 
-        <!-- Project → Conversations -->
+        <!-- Project → Tasks -->
         <path d="M 350,60 C 350,95 89,95 89,130" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="80" y="127" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
@@ -372,18 +381,18 @@
         <path d="M 430,60 C 550,60 550,200 415,215" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="548" y="140" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
-        <!-- Conversation → File (optional, dashed) -->
+        <!-- Task → File (optional, dashed) -->
         <path d="M 89,186 C 89,215 415,211 415,215" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
 
         <!-- "1" near Project bottom -->
         <text x="356" y="75" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">1</text>
 
-        <!-- Conversations → Responses -->
+        <!-- Tasks → Responses -->
         <path d="M 89,186 C 89,225 70,225 70,265" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="95" y="230" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
         <text x="95" y="172" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">1</text>
 
-        <!-- Conversations → Scratchpads -->
+        <!-- Tasks → Scratchpads -->
         <path d="M 168,162 C 220,162 220,265 210,265" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="228" y="261" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
@@ -391,7 +400,7 @@
         <path d="M 278,288 C 320,288 320,303 330,310" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="340" y="306" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
-        <!-- Schedules → triggers → Conversations (dashed) -->
+        <!-- Schedules → triggers → Tasks (dashed) -->
         <path d="M 355,153 C 295,153 228,162 168,162" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
         <text x="268" y="147" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85" text-anchor="middle">triggers</text>
 
@@ -419,12 +428,12 @@
           <text x="664" y="51" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E">independent</text>
         </a>
 
-        <!-- Conversations / Tasks -->
-        <a href="#conversations">
+        <!-- Task / Conversation -->
+        <a href="#tasks">
           <rect x="10" y="130" width="158" height="56" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
-          <text x="89" y="152" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Conversation</text>
-          <rect x="19" y="159" width="50" height="17" rx="4" fill="rgba(34,211,238,0.12)" stroke="rgba(34,211,238,0.28)" stroke-width="1"/>
-          <text x="44" y="171" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="600" fill="#22D3EE">= Task</text>
+          <text x="89" y="152" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Task</text>
+          <rect x="14" y="159" width="90" height="17" rx="4" fill="rgba(34,211,238,0.12)" stroke="rgba(34,211,238,0.28)" stroke-width="1"/>
+          <text x="59" y="171" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" font-weight="600" fill="#22D3EE">= Conversation</text>
         </a>
 
         <!-- Artifacts -->
@@ -453,7 +462,7 @@
           <text x="70" y="292" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Response</text>
         </a>
 
-        <!-- Scratchpads (conversation-scoped) -->
+        <!-- Scratchpads (task-scoped) -->
         <a href="#scratchpads">
           <rect x="148" y="265" width="130" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
           <text x="213" y="286" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Scratchpad</text>
@@ -507,7 +516,11 @@
 
     <div class="base-url">
       <span class="burl-label">Base URL</span>
-      <span class="burl-val">http://localhost:26866/api/v1</span>
+      <div class="burl-toggle" role="group" aria-label="Choose base URL">
+        <button type="button" class="burl-opt active" data-base="local">Local</button>
+        <button type="button" class="burl-opt" data-base="hosted">Hosted</button>
+      </div>
+      <span class="burl-val burl-base">http://localhost:26866/api/v1</span>
     </div>
 
     <!-- Responses -->
@@ -539,7 +552,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">ID of the conversation to append the response to.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">ID of the task to append the response to.</td></tr>
             <tr><td class="p-name">input</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">User message text.</td></tr>
             <tr><td class="p-name">stream</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>true</code>. Return server-sent events. Set to <code>false</code> for a single JSON response.</td></tr>
             <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the agent model for this turn. Defaults to the project setting.</td></tr>
@@ -547,7 +560,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST http://localhost:26866/api/v1/responses \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/responses \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation_id":"conv_xyz","input":"Summarise last week'\''s sales data","stream":true}'</span></pre>
           </div>
@@ -563,7 +576,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific conversation.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific task.</td></tr>
           </table>
         </div>
       </div>
@@ -577,22 +590,22 @@
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Conversation whose active stream to retrieve.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task whose active stream to retrieve.</td></tr>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Conversations -->
-    <div class="api-section" id="conversations">
-      <h2>Conversations</h2>
-      <p class="section-desc">Manage conversation threads. Each conversation holds an ordered list of messages. <strong>Conversations and Tasks are the same concept</strong> — every task is a conversation with a goal and an assigned agent. The API uses both terms interchangeably.</p>
+    <!-- Tasks -->
+    <div class="api-section" id="tasks">
+      <h2>Tasks</h2>
+      <p class="section-desc">Manage tasks. Each task holds an ordered list of messages exchanged with the agent. <strong>Tasks and Conversations are the same concept</strong> — every task is a conversation with a goal and an assigned agent, and the same objects are available at <code>/tasks</code> and <code>/conversations</code>.</p>
 
-      <p class="schema-label">Conversation object</p>
+      <p class="schema-label">Task object</p>
       <div class="code-block" style="margin-bottom:24px">
         <div class="code-header"><span class="code-lang">json</span></div>
         <pre>{
-  <span class="hl">"id"</span>:           <span class="st">"conv_abc123"</span>,
+  <span class="hl">"id"</span>:           <span class="st">"task_abc123"</span>,
   <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,           <span class="cm">// null if not project-scoped</span>
   <span class="hl">"title"</span>:        <span class="st">"Q2 analysis"</span>,
   <span class="hl">"goal"</span>:         <span class="st">"Analyse Q2 revenue by region"</span>,  <span class="cm">// task prompt, optional</span>
@@ -605,8 +618,8 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
-          <span class="endpoint-path">/conversations</span>
-          <span class="endpoint-desc">List conversations</span>
+          <span class="endpoint-path">/tasks</span>
+          <span class="endpoint-desc">List tasks</span>
         </div>
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
@@ -622,19 +635,19 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method post">POST</span>
-          <span class="endpoint-path">/conversations</span>
-          <span class="endpoint-desc">Create a conversation</span>
+          <span class="endpoint-path">/tasks</span>
+          <span class="endpoint-desc">Create a task</span>
         </div>
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a project.</td></tr>
             <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Human-readable name. Auto-generated from the first message if omitted.</td></tr>
-            <tr><td class="p-name">goal</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task prompt or goal that frames the conversation for the agent.</td></tr>
+            <tr><td class="p-name">goal</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task prompt or goal that frames the task for the agent.</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST http://localhost:26866/api/v1/conversations \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/tasks \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","goal":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
@@ -644,13 +657,13 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
-          <span class="endpoint-path">/conversations/{id}</span>
-          <span class="endpoint-desc">Get a conversation</span>
+          <span class="endpoint-path">/tasks/{id}</span>
+          <span class="endpoint-desc">Get a task</span>
         </div>
         <div class="endpoint-body">
           <p class="schema-label">Path parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Conversation ID.</td></tr>
+            <tr><td class="p-name">id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task ID.</td></tr>
           </table>
         </div>
       </div>
@@ -658,7 +671,7 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method patch">PATCH</span>
-          <span class="endpoint-path">/conversations/{id}</span>
+          <span class="endpoint-path">/tasks/{id}</span>
           <span class="endpoint-desc">Update title, goal, or status</span>
         </div>
         <div class="endpoint-body">
@@ -674,8 +687,8 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method get">GET</span>
-          <span class="endpoint-path">/conversations/{id}/items</span>
-          <span class="endpoint-desc">Get messages in a conversation</span>
+          <span class="endpoint-path">/tasks/{id}/items</span>
+          <span class="endpoint-desc">Get messages in a task</span>
         </div>
         <div class="endpoint-body">
           <p>Returns an ordered array of message items. Each item has <code>role</code> (<code>user</code> or <code>assistant</code>), <code>content</code>, and <code>created_at</code>.</p>
@@ -690,8 +703,8 @@
       <div class="endpoint">
         <div class="endpoint-header">
           <span class="method delete">DELETE</span>
-          <span class="endpoint-path">/conversations/{id}</span>
-          <span class="endpoint-desc">Delete a conversation and all its messages</span>
+          <span class="endpoint-path">/tasks/{id}</span>
+          <span class="endpoint-desc">Delete a task and all its messages</span>
         </div>
       </div>
     </div>
@@ -699,7 +712,7 @@
     <!-- Projects -->
     <div class="api-section" id="projects">
       <h2>Projects</h2>
-      <p class="section-desc">Projects are workspaces that group conversations, files, and artifacts.</p>
+      <p class="section-desc">Projects are workspaces that group tasks, files, and artifacts.</p>
 
       <p class="schema-label">Project object</p>
       <div class="code-block" style="margin-bottom:24px">
@@ -742,11 +755,11 @@
             <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Display name for the project.</td></tr>
             <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Short description shown in the UI.</td></tr>
             <tr><td class="p-name">connector_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Data source connections available within this project.</td></tr>
-            <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Global skills to activate for all conversations in this project.</td></tr>
+            <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Global skills to activate for all tasks in this project.</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST http://localhost:26866/api/v1/projects \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/projects \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
           </div>
@@ -862,7 +875,7 @@
     <!-- Schedules -->
     <div class="api-section" id="schedules">
       <h2>Schedules</h2>
-      <p class="section-desc">Run tasks on a cron schedule. Schedules belong to a project and trigger a conversation or workflow automatically.</p>
+      <p class="section-desc">Run tasks on a cron schedule. Schedules belong to a project and trigger a task or workflow automatically.</p>
 
       <p class="schema-label">Schedule object</p>
       <div class="code-block" style="margin-bottom:24px">
@@ -873,7 +886,7 @@
   <span class="hl">"cron"</span>:            <span class="st">"0 9 * * 1"</span>,       <span class="cm">// standard 5-field cron expression</span>
   <span class="hl">"timezone"</span>:        <span class="st">"America/New_York"</span>,
   <span class="hl">"prompt"</span>:          <span class="st">"Generate weekly sales digest"</span>,
-  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null = create new conversation each run</span>
+  <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null = create new task each run</span>
   <span class="hl">"status"</span>:          <span class="st">"active"</span>,         <span class="cm">// "active" | "paused"</span>
   <span class="hl">"last_run_at"</span>:     <span class="st">"2026-06-09T09:00:00Z"</span>,
   <span class="hl">"next_run_at"</span>:     <span class="st">"2026-06-16T09:00:00Z"</span>,
@@ -909,11 +922,11 @@
             <tr><td class="p-name">cron</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Standard 5-field cron expression, e.g. <code>"0 9 * * 1"</code> = every Monday at 09:00.</td></tr>
             <tr><td class="p-name">prompt</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task the agent runs at each scheduled time.</td></tr>
             <tr><td class="p-name">timezone</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">IANA timezone. Default <code>UTC</code>.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Append each run to an existing conversation. If omitted, a new conversation is created per run.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Append each run to an existing task. If omitted, a new task is created per run.</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST http://localhost:26866/api/v1/schedules \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/schedules \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","cron":"0 9 * * 1","prompt":"Generate weekly sales digest","timezone":"America/New_York"}'</span></pre>
           </div>
@@ -957,7 +970,7 @@
     <!-- Files -->
     <div class="api-section" id="files">
       <h2>Files</h2>
-      <p class="section-desc">Upload and manage files that the agent can read, search, and reference. Files can be attached to a project or to individual conversations.</p>
+      <p class="section-desc">Upload and manage files that the agent can read, search, and reference. Files can be attached to a project or to individual tasks.</p>
 
       <p class="schema-label">File object</p>
       <div class="code-block" style="margin-bottom:24px">
@@ -967,7 +980,7 @@
   <span class="hl">"name"</span>:            <span class="st">"Q2-report.pdf"</span>,
   <span class="hl">"mime_type"</span>:       <span class="st">"application/pdf"</span>,
   <span class="hl">"size"</span>:            <span class="st">204800</span>,           <span class="cm">// bytes</span>
-  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,       <span class="cm">// null if conversation-scoped only</span>
+  <span class="hl">"project_id"</span>:      <span class="st">"proj_xyz"</span>,       <span class="cm">// null if task-scoped only</span>
   <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null if project-scoped only</span>
   <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
@@ -983,7 +996,7 @@
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a conversation.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
           </table>
         </div>
       </div>
@@ -1000,11 +1013,11 @@
           <table class="params-table">
             <tr><td class="p-name">file</td><td class="p-type">file</td><td class="p-req req">required</td><td class="p-desc">The file binary. Accepted: PDF, DOCX, XLSX, CSV, TXT, PNG, JPG, and more.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a project.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a conversation. Can be set alongside <code>project_id</code>.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a task. Can be set alongside <code>project_id</code>.</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST http://localhost:26866/api/v1/files \
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">http://localhost:26866/api/v1</span>/files \
   -F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
           </div>
@@ -1065,7 +1078,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/connectors/specs"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/connectors/specs"</span></pre>
           </div>
         </div>
       </div>
@@ -1099,7 +1112,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/connectors/connections"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/connectors/connections"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "spec_id": "postgres",
@@ -1143,7 +1156,7 @@
     <!-- Memories -->
     <div class="api-section" id="memories">
       <h2>Memories</h2>
-      <p class="section-desc">Persistent facts and context the agent retains across conversations. Memories can be <strong>global</strong> (shared across all projects and conversations) or <strong>project-scoped</strong> — omit <code>project_id</code> to create a global memory. The agent automatically surfaces relevant memories as context at the start of each conversation.</p>
+      <p class="section-desc">Persistent facts and context the agent retains across tasks. Memories can be <strong>global</strong> (shared across all projects and tasks) or <strong>project-scoped</strong> — omit <code>project_id</code> to create a global memory. The agent automatically surfaces relevant memories as context at the start of each task.</p>
 
       <p class="schema-label">Memory object</p>
       <div class="code-block" style="margin-bottom:24px">
@@ -1172,8 +1185,8 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/memories"</span>               <span class="cm"># global</span>
-<span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories"</span>               <span class="cm"># global</span>
+<span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories?project_id=..."</span>  <span class="cm"># project-scoped</span></pre>
           </div>
         </div>
       </div>
@@ -1192,7 +1205,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/memories"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/memories"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content": "Always use Q3 targets as the baseline.", "project_id": "proj_xyz"}'</span></pre>
           </div>
@@ -1252,7 +1265,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/skills"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/skills"</span></pre>
           </div>
         </div>
       </div>
@@ -1266,14 +1279,14 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Kebab-case identifier. Used to invoke the skill from a conversation.</td></tr>
+            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Kebab-case identifier. Used to invoke the skill from a task.</td></tr>
             <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Short summary of what this skill does. Shown in the UI and used by the agent to decide whether to invoke it.</td></tr>
             <tr><td class="p-name">instructions</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Detailed prompt injected whenever this skill is active. Explains how to carry out the task, preferred format, constraints, etc.</td></tr>
             <tr><td class="p-name">tools</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">List of tool identifiers the agent may call when running this skill (e.g. <code>"sql_query"</code>, <code>"send_email"</code>).</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/skills"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/skills"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{
     "name": "weekly-report",
@@ -1313,7 +1326,7 @@
 
     <div class="api-section" id="scratchpads">
       <h2>Scratchpads</h2>
-      <p class="section-desc">Notebook-style workspaces scoped to a conversation. A scratchpad is made up of ordered <strong>cells</strong> — the agent writes to cells as it reasons, drafts, and executes code. Each cell has a type (<code>markdown</code>, <code>code</code>, or <code>output</code>) and tracks its own execution state. Scratchpads persist for the lifetime of the conversation and can be promoted to an Artifact.</p>
+      <p class="section-desc">Notebook-style workspaces scoped to a task. A scratchpad is made up of ordered <strong>cells</strong> — the agent writes to cells as it reasons, drafts, and executes code. Each cell has a type (<code>markdown</code>, <code>code</code>, or <code>output</code>) and tracks its own execution state. Scratchpads persist for the lifetime of the task and can be promoted to an Artifact.</p>
 
       <h2 style="font-size:14px;font-weight:600;color:var(--ink-3);border:none;margin:0 0 16px;padding:0;letter-spacing:0.04em;">Scratchpad object</h2>
       <div class="code-block" style="margin-bottom:32px">
@@ -1362,12 +1375,12 @@
         <div class="endpoint-header">
           <span class="method get">GET</span>
           <span class="endpoint-path">/scratchpads</span>
-          <span class="endpoint-desc">List scratchpads for a conversation</span>
+          <span class="endpoint-desc">List scratchpads for a task</span>
         </div>
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/scratchpads?conversation_id=..."</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads?conversation_id=..."</span></pre>
           </div>
         </div>
       </div>
@@ -1381,7 +1394,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/scratchpads"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation_id":"...","title":"Sales analysis draft","cells":[]}'</span></pre>
           </div>
@@ -1405,7 +1418,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"http://localhost:26866/api/v1/scratchpads/{scratchpad_id}"</span> \
+            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"title":"Final analysis","saved":true}'</span></pre>
           </div>
@@ -1432,7 +1445,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/scratchpads/{scratchpad_id}/cells"</span> \
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"type":"code","language":"python","content":"df.head()"}'</span></pre>
           </div>
@@ -1448,7 +1461,7 @@
         <div class="endpoint-body">
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X PATCH <span class="st">"http://localhost:26866/api/v1/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
+            <pre><span class="hl">curl</span> -X PATCH <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}"</span> \
   -H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content":"df.tail(10)","index":2}'</span></pre>
           </div>
@@ -1465,7 +1478,7 @@
           <p>Runs the cell and streams output back as server-sent events. Each event carries a partial output object. Terminal event has <code>status: "success"</code> or <code>status: "error"</code>.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> -X POST <span class="st">"http://localhost:26866/api/v1/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
+            <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span></pre>
           </div>
         </div>
       </div>
@@ -1481,7 +1494,7 @@
 
     <div class="api-section" id="search">
       <h2>Search</h2>
-      <p class="section-desc">Full-text and semantic search across conversations, artifacts, files, and memories. Returns ranked results with the matching resource type and a short excerpt.</p>
+      <p class="section-desc">Full-text and semantic search across tasks, artifacts, files, and memories. Returns ranked results with the matching resource type and a short excerpt.</p>
 
       <p class="schema-label">SearchResult object</p>
       <div class="code-block" style="margin-bottom:24px">
@@ -1512,7 +1525,7 @@
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
-            <pre><span class="hl">curl</span> <span class="st">"http://localhost:26866/api/v1/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">http://localhost:26866/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span></pre>
           </div>
 
           <p class="schema-label">Response</p>
@@ -1573,6 +1586,30 @@
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Base URL toggle — swaps every curl example on the page between the
+  // local server and MindsHub's hosted instance.
+  (function() {
+    var LOCAL = 'http://localhost:26866/api/v1';
+    var HOSTED = 'https://cowork.mindshub.ai/api/v1';
+    var buttons = document.querySelectorAll('.burl-opt');
+    var targets = document.querySelectorAll('.burl-base');
+
+    function setBase(which) {
+      var val = which === 'hosted' ? HOSTED : LOCAL;
+      targets.forEach(function(el) { el.textContent = val; });
+      buttons.forEach(function(b) { b.classList.toggle('active', b.dataset.base === which); });
+      try { localStorage.setItem('cowork-docs-base', which); } catch (e) {}
+    }
+
+    buttons.forEach(function(b) {
+      b.addEventListener('click', function() { setBase(b.dataset.base); });
+    });
+
+    var saved = null;
+    try { saved = localStorage.getItem('cowork-docs-base'); } catch (e) {}
+    if (saved === 'hosted') setBase('hosted');
+  })();
 </script>
 </body>
 </html>

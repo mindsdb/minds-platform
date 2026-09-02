@@ -196,7 +196,6 @@
     margin-bottom: 72px;
   }
   @media (min-width: 640px) { .cards { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 900px) { .cards { grid-template-columns: repeat(3, 1fr); } }
 
   .card {
     position: relative;
@@ -347,7 +346,6 @@
     <div class="nav-links">
       <a href="index.html" class="active">Docs</a>
       <a href="setup.html">Setup</a>
-      <a href="use-cases.html">Use Cases</a>
       <a href="api.html">API</a>
       <a href="https://docs.mindshub.ai/inference/">Hosted API</a>
       <a href="https://github.com/mindsdb/mindshub">GitHub ↗</a>
@@ -387,19 +385,11 @@
       <a href="setup.html" class="card-link">Setup guide →</a>
     </div>
     <div class="card">
-      <a href="use-cases.html" class="card-cover"></a>
-      <div class="card-icon">◈</div>
-      <div class="card-tag">Examples</div>
-      <h3>Use Cases</h3>
-      <p>See what creators, operators, and strategists are building with the platform.</p>
-      <a href="use-cases.html" class="card-link">Explore examples →</a>
-    </div>
-    <div class="card">
       <a href="api.html" class="card-cover"></a>
       <div class="card-icon">⬡</div>
       <div class="card-tag">Reference</div>
-      <h3>API</h3>
-      <p>REST endpoints for conversations, projects, artifacts, schedules, connectors, and more.</p>
+      <h3>Tasks API</h3>
+      <p>Send tasks to agents over REST — projects, artifacts, schedules, connectors, and more. Runs local or hosted.</p>
       <a href="api.html" class="card-link">API reference →</a>
     </div>
   </div>
@@ -417,7 +407,7 @@
     <div class="arch-pill">
       <a class="pill-cover" href="api.html"></a>
       <div class="pill-name">backend / core_api</div>
-      <div class="pill-desc">FastAPI server. Conversations, projects, artifacts, schedules, connectors.</div>
+      <div class="pill-desc">FastAPI server. Tasks, projects, artifacts, schedules, connectors.</div>
       <div class="pill-repo"><a href="https://github.com/mindsdb/cowork-server" target="_blank">github.com/mindsdb/cowork-server ↗</a></div>
     </div>
     <div class="arch-pill">
