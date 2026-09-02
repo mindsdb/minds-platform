@@ -132,11 +132,29 @@
   .api-banner-text { flex: 1; min-width: 240px; }
   .api-banner-text a { font-weight: 500; }
 
-  .shell { max-width: 1100px; margin: 0 auto; padding: 64px 24px 120px; display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
+  .shell { max-width: 1440px; margin: 0 auto; padding: 64px 24px 120px; display: grid; grid-template-columns: 220px 1fr 360px; gap: 0; align-items: start; }
+  @media (max-width: 1200px) { .shell { grid-template-columns: 220px 1fr; max-width: 1100px; } }
   @media (max-width: 768px) { .shell { grid-template-columns: 1fr; } }
 
   .sidebar { padding-right: 40px; padding-top: 4px; position: sticky; top: 72px; }
   @media (max-width: 768px) { .sidebar { display: none; } }
+
+  /* ── Live preview panel ── */
+  .preview { padding-left: 32px; position: sticky; top: 72px; max-height: calc(100vh - 88px); overflow-y: auto; }
+  @media (max-width: 1200px) { .preview { display: none; } }
+  .preview-inner { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 18px; }
+  .preview-label {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4);
+    margin-bottom: 10px;
+  }
+  .preview-response-label { margin-top: 20px; }
+  .preview-endpoint-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+  .preview-endpoint-head .method { font-size: 9.5px; }
+  .preview-endpoint-head .path { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); word-break: break-all; }
+  .preview-empty { font-size: 12.5px; color: var(--ink-4); font-style: italic; }
+  .preview .code-block { margin: 0; }
+  .preview pre { font-size: 11.5px; }
   .sidebar-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 12px; }
   .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
   .sidebar li a { font-size: 13px; color: var(--ink-3); display: block; padding: 4px 10px; border-left: 2px solid transparent; border-radius: 0 var(--r) var(--r) 0; transition: color 120ms, border-color 120ms; }
@@ -226,7 +244,16 @@
 
   pre { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.65; color: var(--ink-2); overflow-x: auto; tab-size: 2; }
   .code-block { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; margin: 10px 0; }
-  .code-header { padding: 8px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; }
+  .code-header { padding: 8px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+  .copy-btn {
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-4); background: none; border: 1px solid var(--line-2);
+    border-radius: var(--r); padding: 2px 8px; cursor: pointer;
+    transition: color 120ms, border-color 120ms;
+  }
+  .copy-btn:hover { color: var(--ink-2); border-color: var(--ink-4); opacity: 1; }
+  .copy-btn.copied { color: var(--accent); border-color: rgba(34,211,238,0.4); }
   .code-lang { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-4); }
   .code-block pre { padding: 14px 16px; }
   .hl { color: var(--accent); }
@@ -1561,6 +1588,16 @@
     </div>
 
   </main>
+
+  <aside class="preview" id="preview-panel">
+    <div class="preview-inner">
+      <div class="preview-endpoint-head" id="preview-endpoint-head"></div>
+      <div class="preview-label">Request</div>
+      <div id="preview-curl-slot"><p class="preview-empty">Scroll to an endpoint to see its request here.</p></div>
+      <div class="preview-label preview-response-label" id="preview-response-label" hidden>Response</div>
+      <div id="preview-response-slot"></div>
+    </div>
+  </aside>
 </div>
 
 <footer>
@@ -1626,6 +1663,119 @@
     var saved = null;
     try { saved = localStorage.getItem('cowork-docs-base'); } catch (e) {}
     if (saved === 'local') setBase('local');
+
+    if (window.refreshPreviewPanel) window.refreshPreviewPanel();
+  })();
+
+  // Copy buttons — every code block gets one, wired via delegation so it
+  // works on the live-preview panel's cloned blocks too.
+  (function() {
+    document.querySelectorAll('.code-block .code-header').forEach(function(header) {
+      if (header.querySelector('.copy-btn')) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      header.appendChild(btn);
+    });
+
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      var block = btn.closest('.code-block');
+      var pre = block && block.querySelector('pre');
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText).then(function() {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+      });
+    });
+  })();
+
+  // Live preview panel — mirrors the curl/response of whichever endpoint is
+  // currently scrolled into view. Copy buttons on cloned blocks work because
+  // clicks are handled by the delegated listener above, not per-element.
+  (function() {
+    var panel = document.getElementById('preview-panel');
+    var endpoints = Array.from(document.querySelectorAll('.endpoint'));
+    if (!panel || !endpoints.length) return;
+
+    var headEl = document.getElementById('preview-endpoint-head');
+    var curlSlot = document.getElementById('preview-curl-slot');
+    var responseLabel = document.getElementById('preview-response-label');
+    var responseSlot = document.getElementById('preview-response-slot');
+    var activeEndpoint = null;
+
+    function findCurlBlock(ep) {
+      var blocks = ep.querySelectorAll('.code-block');
+      for (var i = 0; i < blocks.length; i++) {
+        var lang = blocks[i].querySelector('.code-lang');
+        if (lang && lang.textContent.trim() === 'curl') return blocks[i];
+      }
+      return null;
+    }
+
+    function findResponseBlock(ep) {
+      var labels = ep.querySelectorAll('.schema-label');
+      for (var i = 0; i < labels.length; i++) {
+        if (labels[i].textContent.trim().indexOf('Response') === 0) {
+          var next = labels[i].nextElementSibling;
+          if (next && next.classList.contains('code-block')) return next;
+        }
+      }
+      return null;
+    }
+
+    function renderEndpoint(ep) {
+      activeEndpoint = ep;
+      headEl.innerHTML = '';
+      var method = ep.querySelector('.method');
+      var path = ep.querySelector('.endpoint-path');
+      if (method) headEl.appendChild(method.cloneNode(true));
+      if (path) {
+        var p = document.createElement('span');
+        p.className = 'path';
+        p.textContent = path.textContent;
+        headEl.appendChild(p);
+      }
+
+      var curl = findCurlBlock(ep);
+      curlSlot.innerHTML = '';
+      if (curl) {
+        curlSlot.appendChild(curl.cloneNode(true));
+      } else {
+        curlSlot.innerHTML = '<p class="preview-empty">No curl example for this endpoint — see the parameters above.</p>';
+      }
+
+      var response = findResponseBlock(ep);
+      responseSlot.innerHTML = '';
+      if (response) {
+        responseLabel.hidden = false;
+        responseSlot.appendChild(response.cloneNode(true));
+      } else {
+        responseLabel.hidden = true;
+      }
+    }
+
+    function updateActiveEndpoint(force) {
+      var scrollY = window.scrollY + 140;
+      var current = endpoints[0];
+      for (var i = 0; i < endpoints.length; i++) {
+        if (endpoints[i].getBoundingClientRect().top + window.scrollY <= scrollY) {
+          current = endpoints[i];
+        } else {
+          break;
+        }
+      }
+      if (force || current !== activeEndpoint) renderEndpoint(current);
+    }
+
+    window.addEventListener('scroll', function() { updateActiveEndpoint(false); }, { passive: true });
+    updateActiveEndpoint(true);
+
+    // Re-render with fresh (possibly re-based) content after a toggle switch.
+    window.refreshPreviewPanel = function() { updateActiveEndpoint(true); };
   })();
 </script>
 </body>
