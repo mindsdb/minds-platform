@@ -1152,6 +1152,11 @@
           </table>
             </div>
             <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/artifacts?project_id=proj_xyz"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
 <p class="schema-label">Response — Artifact object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
@@ -1176,11 +1181,25 @@
           <span class="endpoint-desc">Preview an artifact by path</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">path</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Relative artifact path, e.g. <code>sales_dashboard/index.html</code>.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project that owns the artifact.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/artifacts/preview?project_id=proj_xyz&path=sales_dashboard/index.html"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">text</span></div>
+            <pre><span class="cm">// The raw artifact content (e.g. text/html), not a JSON envelope.</span></pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1191,10 +1210,26 @@
           <span class="endpoint-desc">Open an artifact in the desktop shell</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">artifact_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Artifact to open in the Electron window.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/artifacts/open \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"artifact_id":"art_abc123"}'</span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"opened"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1205,11 +1240,25 @@
           <span class="endpoint-desc">Serve a raw artifact file</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Path parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project ID.</td></tr>
             <tr><td class="p-name">path</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">File path within the artifact, e.g. <code>index.html</code> or <code>assets/chart.js</code>.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/artifacts/serve/proj_xyz/index.html"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">text</span></div>
+            <pre><span class="cm">// The raw file, served with its real Content-Type — not a JSON envelope.</span></pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
