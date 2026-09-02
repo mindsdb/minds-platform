@@ -447,7 +447,7 @@
     <!-- Tasks -->
     <div class="api-section" id="tasks">
       <h2>Tasks</h2>
-      <p class="section-desc">Manage tasks. Each task holds an ordered list of messages exchanged with the agent. <strong>Tasks and Conversations are the same concept</strong> — every task is a conversation with a goal and an assigned agent, and the same objects are available at <code>/tasks</code> and <code>/conversations</code>.</p>
+      <p class="section-desc">Manage tasks. Each task holds an ordered list of messages exchanged with the agent. <strong>Tasks and Conversations are the same concept</strong> — every task is a conversation with an assigned agent, and the same objects are available at <code>/tasks</code> and <code>/conversations</code>.</p>
 
       <div class="endpoint">
         <div class="endpoint-header">
@@ -458,15 +458,18 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a project.</td></tr>
-            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Human-readable name. Auto-generated from the first message if omitted.</td></tr>
-            <tr><td class="p-name">goal</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task prompt or goal that frames the task for the agent.</td></tr>
+            <tr><td class="p-name">topic</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">The task's opening prompt. Also used to auto-generate the title if <code>title</code> is omitted.</td></tr>
+            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Human-readable name. Falls back to <code>topic</code>, then "Untitled task".</td></tr>
+            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name to attach to. Ignored if <code>project_id</code> is set. Defaults to your account's default project if both are omitted.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project ID to attach to.</td></tr>
+            <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Agent harness to run this task with, overriding the account default (e.g. <code>anton</code>).</td></tr>
+            <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Model override for this task. Persisted, so a reopened task remembers the pick.</td></tr>
           </table>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
   -H <span class="st">"Content-Type: application/json"</span> \
-  -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","goal":"Analyse Q2 revenue by region"}'</span></pre>
+  -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","topic":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
         </div>
       </div>
@@ -481,9 +484,8 @@
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific project.</td></tr>
-            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>archived</code>. Returns all if omitted.</td></tr>
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Max results to return. Default <code>50</code>, max <code>200</code>.</td></tr>
-            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Pagination offset. Default <code>0</code>.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by project name instead of ID. Pass <code>all</code> to return tasks across every project.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Max results to return. Default <code>50</code>.</td></tr>
           </table>
         </div>
       </div>
@@ -503,13 +505,17 @@
           <div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
-  <span class="hl">"id"</span>:           <span class="st">"task_abc123"</span>,
-  <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,           <span class="cm">// null if not project-scoped</span>
-  <span class="hl">"title"</span>:        <span class="st">"Q2 analysis"</span>,
-  <span class="hl">"goal"</span>:         <span class="st">"Analyse Q2 revenue by region"</span>,  <span class="cm">// task prompt, optional</span>
-  <span class="hl">"status"</span>:       <span class="st">"active"</span>,             <span class="cm">// "active" | "archived"</span>
-  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
-  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:04:12Z"</span>
+  <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
+  <span class="hl">"title"</span>:            <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"preview"</span>:          <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"project"</span>:          <span class="st">"Sales Automation"</span>,
+  <span class="hl">"project_id"</span>:       <span class="st">"proj_xyz"</span>,           <span class="cm">// every task belongs to a project — its account default if none was chosen</span>
+  <span class="hl">"project_path"</span>:     <span class="st">"/Users/you/cowork/sales-automation"</span>,
+  <span class="hl">"harness"</span>:          <span class="st">"anton"</span>,               <span class="cm">// null = account default</span>
+  <span class="hl">"model"</span>:            <span class="st">"claude-opus-4-8"</span>,     <span class="cm">// null = account default</span>
+  <span class="hl">"reasoning_effort"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:04:12Z"</span>  <span class="cm">// last message activity, not just renames</span>
 }</pre>
           </div>
         </div>
@@ -519,14 +525,33 @@
         <div class="endpoint-header">
           <span class="method patch">PATCH</span>
           <span class="endpoint-path" data-path="/tasks/{id}">https://cowork.mindshub.ai/api/v1/tasks/{id}</span>
-          <span class="endpoint-desc">Update title, goal, or status</span>
+          <span class="endpoint-desc">Rename a task, or repoint it to another project</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Moving via <code>project</code>/<code>project_id</code> here only repoints the task — it does not relocate the artifacts it created. Use <code>POST /tasks/{id}/move</code> for that.</p>
+          <p class="schema-label">Body</p>
+          <table class="params-table">
+            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New title.</td></tr>
+            <tr><td class="p-name">topic</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Used as the new title if <code>title</code> is omitted.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Move to a project by name.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Move to a project by ID.</td></tr>
+            <tr><td class="p-name">disabled_connections</td><td class="p-type">object[]</td><td class="p-req opt">optional</td><td class="p-desc">Connections to exclude from this task's turns.</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method post">POST</span>
+          <span class="endpoint-path" data-path="/tasks/{id}/move">https://cowork.mindshub.ai/api/v1/tasks/{id}/move</span>
+          <span class="endpoint-desc">Move a task to another project, artifacts included</span>
         </div>
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New title.</td></tr>
-            <tr><td class="p-name">goal</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Updated task goal.</td></tr>
-            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>archived</code>.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Destination project by name. One of <code>project</code>/<code>project_id</code> is required, and it must already exist.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Destination project by ID.</td></tr>
+            <tr><td class="p-name">move_objects</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>true</code>. Also relocates the task's artifacts into the destination project; attached files follow automatically either way.</td></tr>
           </table>
         </div>
       </div>
@@ -538,12 +563,7 @@
           <span class="endpoint-desc">Get messages in a task</span>
         </div>
         <div class="endpoint-body">
-          <p>Returns an ordered array of message items. Each item has <code>role</code> (<code>user</code> or <code>assistant</code>), <code>content</code>, and <code>created_at</code>.</p>
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>100</code>.</td></tr>
-            <tr><td class="p-name">before</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Return items before this item ID (cursor pagination).</td></tr>
-          </table>
+          <p>Returns the full ordered array of message items — no pagination. Each item has <code>id</code>, <code>role</code>, <code>content</code>, <code>created_at</code>, an <code>events</code> array, and <code>harness</code> when the message came from a specific agent harness.</p>
         </div>
       </div>
 
@@ -552,6 +572,24 @@
           <span class="method delete">DELETE</span>
           <span class="endpoint-path" data-path="/tasks/{id}">https://cowork.mindshub.ai/api/v1/tasks/{id}</span>
           <span class="endpoint-desc">Delete a task and all its messages</span>
+        </div>
+        <div class="endpoint-body">
+          <p>Returns <code>{"ok": true}</code>.</p>
+        </div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-header">
+          <span class="method delete">DELETE</span>
+          <span class="endpoint-path" data-path="/tasks/{id}/turns/{turn_index}">https://cowork.mindshub.ai/api/v1/tasks/{id}/turns/{turn_index}</span>
+          <span class="endpoint-desc">Delete a turn and everything after it</span>
+        </div>
+        <div class="endpoint-body">
+          <p class="schema-label">Path parameters</p>
+          <table class="params-table">
+            <tr><td class="p-name">turn_index</td><td class="p-type">integer</td><td class="p-req req">required</td><td class="p-desc">0-based index counting only assistant messages. Also removes that turn's preceding user message, if any.</td></tr>
+          </table>
+          <p>Returns <code>{"ok": true, "deleted": N}</code>, where <code>N</code> is the number of messages removed.</p>
         </div>
       </div>
 
