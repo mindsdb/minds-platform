@@ -1806,6 +1806,17 @@
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content": "Always use Q3 targets as the baseline.", "project_id": "proj_xyz"}'</span></pre>
           </div>
+<p class="schema-label">Response — Memory object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:           <span class="st">"mem_abc123"</span>,
+  <span class="hl">"content"</span>:      <span class="st">"Always use Q3 targets as the baseline."</span>,
+  <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,
+  <span class="hl">"source"</span>:       <span class="st">"user"</span>,
+  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
             </div>
           </div>
         </div>
@@ -1818,10 +1829,33 @@
           <span class="endpoint-desc">Update a memory</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">content</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Updated text for the memory.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X PATCH <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories/mem_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"content":"Always use Q4 targets as the baseline."}'</span></pre>
+          </div>
+<p class="schema-label">Response — Memory object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:           <span class="st">"mem_abc123"</span>,
+  <span class="hl">"content"</span>:      <span class="st">"Always use Q3 targets as the baseline."</span>,
+  <span class="hl">"project_id"</span>:   <span class="st">"proj_xyz"</span>,
+  <span class="hl">"source"</span>:       <span class="st">"user"</span>,
+  <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1830,6 +1864,26 @@
           <span class="method delete">DELETE</span>
           <span class="endpoint-path" data-path="/memories/{id}">https://cowork.mindshub.ai/api/v1/memories/{id}</span>
           <span class="endpoint-desc">Delete a memory</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Memory ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories/mem_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
