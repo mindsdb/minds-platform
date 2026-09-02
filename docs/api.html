@@ -329,7 +329,7 @@
 
     <!-- ERD -->
     <div class="erd-wrap">
-      <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-label="Resource relationship diagram" style="width:100%;height:auto;display:block">
+      <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-label="Resource relationship diagram" style="width:100%;height:auto;display:block">
         <defs>
           <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
             <path d="M1.5,1.5 L7,4.5 L1.5,7.5" stroke="#3A4F6E" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -354,9 +354,9 @@
         <path d="M 220,76 C 220,115 265,115 265,150" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="243" y="140" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
-        <!-- Project → File -->
-        <path d="M 250,76 C 250,110 405,110 405,150" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
-        <text x="368" y="138" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
+        <!-- Project → File (routed through the Memory/Skill gap into the resources column) -->
+        <path d="M 250,76 C 250,136 560,136 590,229" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
+        <text x="470" y="132" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
         <!-- Task → Artifact (optional, dashed — a task's own artifacts) -->
         <path d="M 340,76 C 300,115 170,115 150,150" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
@@ -366,15 +366,15 @@
         <path d="M 370,76 C 370,115 265,115 265,150" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
         <text x="335" y="105" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85" text-anchor="middle">triggers</text>
 
-        <!-- Task → File (optional, dashed) -->
-        <path d="M 430,76 C 430,115 405,115 405,150" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
+        <!-- Task → File (optional, dashed), same routed corridor -->
+        <path d="M 430,76 C 430,136 560,136 590,229" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
 
-        <!-- Task → Scratchpad, routed through the Schedule/File gap -->
+        <!-- Task → Scratchpad, routed through the Schedule/Artifact gap -->
         <path d="M 385,76 C 340,140 340,180 300,230" stroke="#2A3957" stroke-width="1.5" fill="none" marker-end="url(#ah)"/>
         <text x="352" y="165" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A4F6E">N</text>
 
         <!-- Project → Memory (optional, dashed 0..N) -->
-        <path d="M 240,76 C 240,92 590,92 590,109" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
+        <path d="M 240,76 C 240,92 590,92 590,105" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="5,3" fill="none" marker-end="url(#ah-d)"/>
         <text x="400" y="86" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E" text-anchor="middle">0..N</text>
 
         <!-- ── Entity boxes ── -->
@@ -394,13 +394,6 @@
           <text x="385" y="52" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="700" fill="#F2F6FF" letter-spacing="0.2">Task</text>
         </a>
 
-        <!-- Connector (dashed border = independent, usable within any project) -->
-        <a href="#connectors">
-          <rect x="590" y="20" width="148" height="46" rx="8" fill="#0E1626" stroke="#2A3957" stroke-width="1.5" stroke-dasharray="5,3"/>
-          <text x="664" y="41" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#8A97AE">Connector</text>
-          <text x="664" y="57" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E">independent</text>
-        </a>
-
         <!-- Artifact — belongs to a project, and to the task that created it -->
         <a href="#artifacts">
           <rect x="50" y="150" width="120" height="56" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
@@ -415,26 +408,6 @@
           <text x="265" y="177" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Schedule</text>
         </a>
 
-        <!-- File — belongs to a project, and/or to a task -->
-        <a href="#files">
-          <rect x="360" y="150" width="90" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
-          <text x="405" y="177" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">File</text>
-        </a>
-
-        <!-- Memory (optional project scope, solid border) -->
-        <a href="#memories">
-          <rect x="590" y="86" width="148" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
-          <text x="664" y="107" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Memory</text>
-          <text x="664" y="123" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">global or project</text>
-        </a>
-
-        <!-- Skill (global, dashed border = independent, like Connector) -->
-        <a href="#skills">
-          <rect x="590" y="150" width="148" height="46" rx="8" fill="#0E1626" stroke="#2A3957" stroke-width="1.5" stroke-dasharray="5,3"/>
-          <text x="664" y="171" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#8A97AE">Skill</text>
-          <text x="664" y="187" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E">global</text>
-        </a>
-
         <!-- Scratchpad (task-scoped) -->
         <a href="#scratchpads">
           <rect x="230" y="230" width="140" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
@@ -442,20 +415,52 @@
           <text x="300" y="267" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">ephemeral draft</text>
         </a>
 
-        <!-- ── Legend (bottom-right, dotted box) ── -->
-        <rect x="470" y="214" width="270" height="76" rx="6" fill="rgba(8,13,24,0.88)" stroke="#2A3957" stroke-width="1" stroke-dasharray="4,3"/>
-        <text x="480" y="229" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="600" fill="#3A465E" letter-spacing="0.12em">LEGEND</text>
+        <!-- ── Agent Task Resources group (Connectors, Memories, Skills, Files) ── -->
+        <rect x="576" y="8" width="176" height="254" rx="12" fill="none" stroke="#2A3957" stroke-width="1.2" stroke-dasharray="5,4"/>
+        <rect x="592" y="1" width="144" height="14" rx="3" fill="#0C1522" stroke="#1E2A44" stroke-width="0.75"/>
+        <text x="664" y="11.5" font-family="'JetBrains Mono',monospace" font-size="7.5" fill="#5C6B85" text-anchor="middle">Agent Task Resources</text>
+
+        <!-- Connectors (dashed border = independent, usable within any project) -->
+        <a href="#connectors">
+          <rect x="590" y="20" width="148" height="46" rx="8" fill="#0E1626" stroke="#2A3957" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="664" y="41" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#8A97AE">Connectors</text>
+          <text x="664" y="57" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E">independent</text>
+        </a>
+
+        <!-- Memories (optional project scope, solid border) -->
+        <a href="#memories">
+          <rect x="590" y="82" width="148" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
+          <text x="664" y="103" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Memories</text>
+          <text x="664" y="119" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">global or project</text>
+        </a>
+
+        <!-- Skills (global, dashed border = independent, like Connectors) -->
+        <a href="#skills">
+          <rect x="590" y="144" width="148" height="46" rx="8" fill="#0E1626" stroke="#2A3957" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="664" y="165" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#8A97AE">Skills</text>
+          <text x="664" y="181" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9" fill="#3A465E">global</text>
+        </a>
+
+        <!-- Files — belongs to a project, and/or to a task -->
+        <a href="#files">
+          <rect x="590" y="206" width="148" height="46" rx="8" fill="#0E1626" stroke="#1E2A44" stroke-width="1.5"/>
+          <text x="664" y="233" text-anchor="middle" font-family="'Inter',sans-serif" font-size="13" font-weight="600" fill="#F2F6FF">Files</text>
+        </a>
+
+        <!-- ── Legend (horizontal band below Scratchpad) ── -->
+        <rect x="80" y="284" width="600" height="32" rx="6" fill="rgba(8,13,24,0.88)" stroke="#2A3957" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="96" y="304" font-family="'JetBrains Mono',monospace" font-size="8" font-weight="600" fill="#3A465E" letter-spacing="0.12em">LEGEND</text>
         <!-- owns 1..N -->
-        <line x1="480" y1="242" x2="500" y2="242" stroke="#2A3957" stroke-width="1.5"/>
-        <path d="M495.5,239.5 L500,242 L495.5,244.5" stroke="#3A4F6E" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="506" y="246" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">owns  1..N</text>
+        <line x1="180" y1="300" x2="200" y2="300" stroke="#2A3957" stroke-width="1.5"/>
+        <path d="M195.5,297.5 L200,300 L195.5,302.5" stroke="#3A4F6E" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="206" y="304" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">owns  1..N</text>
         <!-- optional / triggers -->
-        <line x1="480" y1="261" x2="500" y2="261" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="4,2"/>
-        <path d="M495.5,258.5 L500,261 L495.5,263.5" stroke="#2A3957" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="506" y="265" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">optional / triggers · 0..N</text>
+        <line x1="320" y1="300" x2="340" y2="300" stroke="#1E2A44" stroke-width="1.2" stroke-dasharray="4,2"/>
+        <path d="M335.5,297.5 L340,300 L335.5,302.5" stroke="#2A3957" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="346" y="304" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">optional / triggers</text>
         <!-- independent -->
-        <rect x="480" y="272" width="20" height="14" rx="3" fill="none" stroke="#2A3957" stroke-width="1" stroke-dasharray="3,2"/>
-        <text x="506" y="283" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">independent / global</text>
+        <rect x="490" y="293" width="16" height="14" rx="3" fill="none" stroke="#2A3957" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="512" y="304" font-family="'JetBrains Mono',monospace" font-size="9" fill="#5C6B85">independent / global</text>
       </svg>
     </div>
 
