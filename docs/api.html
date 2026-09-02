@@ -1012,6 +1012,18 @@
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
           </div>
+<p class="schema-label">Response — Project object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:             <span class="st">"proj_abc123"</span>,
+  <span class="hl">"name"</span>:           <span class="st">"Sales Automation"</span>,
+  <span class="hl">"description"</span>:    <span class="st">"Weekly reporting flows"</span>,
+  <span class="hl">"connector_ids"</span>:  [<span class="st">"conn_001"</span>, <span class="st">"conn_002"</span>],
+  <span class="hl">"skill_ids"</span>:      [<span class="st">"skill_abc"</span>],
+  <span class="hl">"created_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
             </div>
           </div>
         </div>
@@ -1056,13 +1068,37 @@
           <span class="endpoint-desc">Update a project</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"></td></tr>
             <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"></td></tr>
             <tr><td class="p-name">connector_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replaces the current list.</td></tr>
             <tr><td class="p-name">skill_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replaces the current list.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X PATCH <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects/proj_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"description":"Updated weekly reporting flows"}'</span></pre>
+          </div>
+<p class="schema-label">Response — Project object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:             <span class="st">"proj_abc123"</span>,
+  <span class="hl">"name"</span>:           <span class="st">"Sales Automation"</span>,
+  <span class="hl">"description"</span>:    <span class="st">"Weekly reporting flows"</span>,
+  <span class="hl">"connector_ids"</span>:  [<span class="st">"conn_001"</span>, <span class="st">"conn_002"</span>],
+  <span class="hl">"skill_ids"</span>:      [<span class="st">"skill_abc"</span>],
+  <span class="hl">"created_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1071,6 +1107,26 @@
           <span class="method delete">DELETE</span>
           <span class="endpoint-path" data-path="/projects/{id}">https://cowork.mindshub.ai/api/v1/projects/{id}</span>
           <span class="endpoint-desc">Delete a project and all its contents</span>
+        </div>
+        <div class="endpoint-body">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects/proj_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
