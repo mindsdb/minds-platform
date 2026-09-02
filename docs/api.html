@@ -132,29 +132,17 @@
   .api-banner-text { flex: 1; min-width: 240px; }
   .api-banner-text a { font-weight: 500; }
 
-  .shell { max-width: 1440px; margin: 0 auto; padding: 64px 24px 120px; display: grid; grid-template-columns: 220px 1fr 360px; gap: 0; align-items: start; }
-  @media (max-width: 1200px) { .shell { grid-template-columns: 220px 1fr; max-width: 1100px; } }
+  .shell { max-width: 1280px; margin: 0 auto; padding: 64px 24px 120px; display: grid; grid-template-columns: 220px 1fr; gap: 0; align-items: start; }
   @media (max-width: 768px) { .shell { grid-template-columns: 1fr; } }
 
   .sidebar { padding-right: 40px; padding-top: 4px; position: sticky; top: 72px; }
   @media (max-width: 768px) { .sidebar { display: none; } }
 
-  /* ── Live preview panel ── */
-  .preview { padding-left: 32px; position: sticky; top: 72px; max-height: calc(100vh - 88px); overflow-y: auto; }
-  @media (max-width: 1200px) { .preview { display: none; } }
-  .preview-inner { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 18px; }
-  .preview-label {
-    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-4);
-    margin-bottom: 10px;
-  }
-  .preview-response-label { margin-top: 20px; }
-  .preview-endpoint-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-  .preview-endpoint-head .method { font-size: 9.5px; }
-  .preview-endpoint-head .path { font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); word-break: break-all; }
-  .preview-empty { font-size: 12.5px; color: var(--ink-4); font-style: italic; }
-  .preview .code-block { margin: 0; }
-  .preview pre { font-size: 11.5px; }
+  /* ── Per-endpoint two-column layout: params/explanation left, curl+schema right ── */
+  .endpoint-cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); gap: 28px; align-items: start; }
+  @media (max-width: 900px) { .endpoint-cols { grid-template-columns: 1fr; gap: 0; } }
+  .endpoint-example .code-block:first-child { margin-top: 0; }
+  .endpoint-example .schema-label:first-child { margin-top: 0; }
   .sidebar-label { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 12px; }
   .sidebar ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
   .sidebar li a { font-size: 13px; color: var(--ink-3); display: block; padding: 4px 10px; border-left: 2px solid transparent; border-radius: 0 var(--r) var(--r) 0; transition: color 120ms, border-color 120ms; }
@@ -484,8 +472,9 @@
           <span class="endpoint-desc">Create a task</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">topic</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">The task's opening prompt. Also used to auto-generate the title if <code>title</code> is omitted.</td></tr>
             <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Human-readable name. Falls back to <code>topic</code>, then "Untitled task".</td></tr>
             <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name to attach to. Ignored if <code>project_id</code> is set. Defaults to your account's default project if both are omitted.</td></tr>
@@ -493,12 +482,16 @@
             <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Agent harness to run this task with, overriding the account default (e.g. <code>anton</code>).</td></tr>
             <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Model override for this task. Persisted, so a reopened task remembers the pick.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","topic":"Analyse Q2 revenue by region"}'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -526,12 +519,14 @@
           <span class="endpoint-desc">Get a task</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Path parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
             <tr><td class="p-name">id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task ID.</td></tr>
           </table>
-          <p class="schema-label">Response — Task object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — Task object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
@@ -546,6 +541,8 @@
   <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
   <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:04:12Z"</span>  <span class="cm">// last message activity, not just renames</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -664,8 +661,9 @@
           <span class="endpoint-desc">Send a message and stream the reply</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">conversation</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task/conversation ID to append to. Omit to start a new task — pass <code>project</code> or <code>project_id</code> to place it.</td></tr>
             <tr><td class="p-name">input</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">User message text.</td></tr>
             <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name for a new task, when <code>conversation</code> is omitted.</td></tr>
@@ -675,12 +673,16 @@
             <tr><td class="p-name">reasoning_effort</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's reasoning effort for this turn only.</td></tr>
             <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's default harness for this turn only (e.g. <code>anton</code>).</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"conversation":"conv_xyz","input":"Summarise last week'\''s sales data","stream":true}'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -692,18 +694,22 @@
           <span class="endpoint-desc">Resume a task's stream</span>
         </div>
         <div class="endpoint-body">
-          <p>Reconnect to an in-flight (or just-finished) turn: replay from <code>from_seq</code>, then live-tail new output until the turn ends. Pass <code>from_seq=0</code> to replay a task's whole turn from the beginning, or the last sequence number you rendered to resume without re-rendering anything. 404 means no buffer is registered for this task — fall back to <code>GET /tasks/{id}/items</code> for the persisted history.</p>
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p>Reconnect to an in-flight (or just-finished) turn: replay from <code>from_seq</code>, then live-tail new output until the turn ends. Pass <code>from_seq=0</code> to replay a task's whole turn from the beginning, or the last sequence number you rendered to resume without re-rendering anything. 404 means no buffer is registered for this task — fall back to <code>GET /tasks/{id}/items</code> for the persisted history.</p><p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task/conversation to tail.</td></tr>
             <tr><td class="p-name">from_seq</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>. Records with <code>seq &gt;= from_seq</code> are replayed, then the connection live-tails.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=0"</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span>   <span class="cm"># from the start</span>
 <span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/responses/tail?conversation_id=conv_xyz&from_seq=12"</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span>  <span class="cm"># resume from where you left off</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -762,19 +768,24 @@
           <span class="endpoint-desc">Create a project</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Display name for the project.</td></tr>
             <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Short description shown in the UI.</td></tr>
             <tr><td class="p-name">connector_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Data source connections available within this project.</td></tr>
             <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Global skills to activate for all tasks in this project.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/projects \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"name":"Sales Automation","description":"Weekly reporting flows","connector_ids":["conn_001"]}'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -786,13 +797,15 @@
           <span class="endpoint-desc">List all projects</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
             <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>.</td></tr>
           </table>
-          <p class="schema-label">Response — Project object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — Project object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:             <span class="st">"proj_abc123"</span>,
@@ -803,6 +816,8 @@
   <span class="hl">"created_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>,
   <span class="hl">"updated_at"</span>:     <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -845,14 +860,16 @@
           <span class="endpoint-desc">List artifacts</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
             <tr><td class="p-name">type</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>app</code>, <code>report</code>, <code>doc</code>, or <code>dashboard</code>.</td></tr>
             <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
           </table>
-          <p class="schema-label">Response — Artifact object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — Artifact object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:          <span class="st">"art_abc123"</span>,
@@ -863,6 +880,8 @@
   <span class="hl">"created_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>,
   <span class="hl">"updated_at"</span>:  <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -924,13 +943,15 @@
           <span class="endpoint-desc">List schedules</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
             <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
           </table>
-          <p class="schema-label">Response — Schedule object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — Schedule object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:              <span class="st">"sched_abc123"</span>,
@@ -945,6 +966,8 @@
   <span class="hl">"created_at"</span>:      <span class="st">"2026-06-01T00:00:00Z"</span>
 }</pre>
           </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -955,20 +978,25 @@
           <span class="endpoint-desc">Create a schedule</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Project this schedule belongs to.</td></tr>
             <tr><td class="p-name">cron</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Standard 5-field cron expression, e.g. <code>"0 9 * * 1"</code> = every Monday at 09:00.</td></tr>
             <tr><td class="p-name">prompt</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task the agent runs at each scheduled time.</td></tr>
             <tr><td class="p-name">timezone</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">IANA timezone. Default <code>UTC</code>.</td></tr>
             <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Append each run to an existing task. If omitted, a new task is created per run.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/schedules \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","cron":"0 9 * * 1","prompt":"Generate weekly sales digest","timezone":"America/New_York"}'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1019,19 +1047,23 @@
           <span class="endpoint-desc">Upload a file</span>
         </div>
         <div class="endpoint-body">
-          <p>Multipart <code>form-data</code> upload.</p>
-          <p class="schema-label">Form fields</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p>Multipart <code>form-data</code> upload.</p><p class="schema-label">Form fields</p><table class="params-table">
             <tr><td class="p-name">file</td><td class="p-type">file</td><td class="p-req req">required</td><td class="p-desc">The file binary. Accepted: PDF, DOCX, XLSX, CSV, TXT, PNG, JPG, and more.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a project.</td></tr>
             <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a task. Can be set alongside <code>project_id</code>.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/files \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-F <span class="st">"file=@Q2-report.pdf"</span> \
   -F <span class="st">"project_id=proj_xyz"</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1043,13 +1075,15 @@
           <span class="endpoint-desc">List files</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
             <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
           </table>
-          <p class="schema-label">Response — File object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — File object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:              <span class="st">"file_abc123"</span>,
@@ -1060,6 +1094,8 @@
   <span class="hl">"conversation_id"</span>: <span class="st">null</span>,             <span class="cm">// null if project-scoped only</span>
   <span class="hl">"created_at"</span>:      <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1117,12 +1153,14 @@
           <span class="endpoint-desc">List active connections</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">spec_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by connector type (e.g. <code>postgres</code>).</td></tr>
           </table>
-          <p class="schema-label">Response — Connection object</p>
-          <div class="code-block" style="margin-bottom:0">
+            </div>
+            <div class="endpoint-example">
+<p class="schema-label">Response — Connection object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:         <span class="st">"conn_abc123"</span>,
@@ -1132,6 +1170,8 @@
   <span class="hl">"created_at"</span>: <span class="st">"2026-06-11T10:00:00Z"</span>
   <span class="cm">// credentials are never returned</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1143,13 +1183,16 @@
           <span class="endpoint-desc">Create a connection</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">spec_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The connector spec to use (e.g. <code>"postgres"</code>).</td></tr>
             <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Human-readable label for this connection.</td></tr>
             <tr><td class="p-name">credentials</td><td class="p-type">object</td><td class="p-req req">required</td><td class="p-desc">Key-value map of credential fields defined by the spec. Secret fields are encrypted at rest and never returned.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/connectors/connections"</span> \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
@@ -1165,6 +1208,8 @@
       "password": "s3cr3t"
     }
   }'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1205,20 +1250,21 @@
           <span class="endpoint-desc">List memories</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Return memories scoped to this project. Omit to return global memories.</td></tr>
             <tr><td class="p-name">source</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by who created it: <code>user</code> or <code>agent</code>.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span>               <span class="cm"># global</span>
 <span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories?project_id=..."</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span>  <span class="cm"># project-scoped</span></pre>
-          </div>
-          <p class="schema-label">Response — Memory object</p>
-          <div class="code-block" style="margin-bottom:0">
+          </div><p class="schema-label">Response — Memory object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"id"</span>:           <span class="st">"mem_abc123"</span>,
@@ -1228,6 +1274,8 @@
   <span class="hl">"created_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>,
   <span class="hl">"updated_at"</span>:   <span class="st">"2026-06-11T10:00:00Z"</span>
 }</pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1239,17 +1287,22 @@
           <span class="endpoint-desc">Create a memory</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">content</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The fact or preference to remember. Plain text.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Scope to a project. Omit for a global memory.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/memories"</span> \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"content": "Always use Q3 targets as the baseline.", "project_id": "proj_xyz"}'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1319,14 +1372,17 @@
           <span class="endpoint-desc">Register a skill</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Kebab-case identifier. Used to invoke the skill from a task.</td></tr>
             <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Short summary of what this skill does. Shown in the UI and used by the agent to decide whether to invoke it.</td></tr>
             <tr><td class="p-name">instructions</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Detailed prompt injected whenever this skill is active. Explains how to carry out the task, preferred format, constraints, etc.</td></tr>
             <tr><td class="p-name">tools</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">List of tool identifiers the agent may call when running this skill (e.g. <code>"sql_query"</code>, <code>"send_email"</code>).</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/skills"</span> \
   <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
@@ -1337,6 +1393,8 @@
     "instructions": "Always start with an executive summary. Limit to 3 charts.",
     "tools": ["sql_query", "send_email"]
   }'</span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1524,11 +1582,17 @@
           <span class="endpoint-desc">Execute a code cell</span>
         </div>
         <div class="endpoint-body">
-          <p>Runs the cell and streams output back as server-sent events. Each event carries a partial output object. Terminal event has <code>status: "success"</code> or <code>status: "error"</code>.</p>
-          <div class="code-block">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p>Runs the cell and streams output back as server-sent events. Each event carries a partial output object. Terminal event has <code>status: "success"</code> or <code>status: "error"</code>.</p>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> -X POST <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/scratchpads/{scratchpad_id}/cells/{cell_id}/run"</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1553,21 +1617,21 @@
           <span class="endpoint-desc">Search across the workspace</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">q</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The search query. Supports natural language and keyword matching.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Limit results to a single project.</td></tr>
             <tr><td class="p-name">types</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Comma-separated list of resource types to include: <code>conversation</code>, <code>artifact</code>, <code>file</code>, <code>memory</code>. Defaults to all.</td></tr>
             <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Maximum results to return. Defaults to <code>20</code>, max <code>100</code>.</td></tr>
           </table>
-          <div class="code-block">
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
             <div class="code-header"><span class="code-lang">curl</span></div>
             <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/search?q=sales+forecast&project_id=proj_xyz&types=conversation,file&limit=10"</span><span class="burl-auth-line"> \
   -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
-          </div>
-
-          <p class="schema-label">Response — SearchResult objects</p>
-          <div class="code-block" style="margin-bottom:0">
+          </div><p class="schema-label">Response — SearchResult objects</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
   <span class="hl">"results"</span>: [
@@ -1583,21 +1647,13 @@
   <span class="hl">"total"</span>: 1
 }</pre>
           </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
   </main>
-
-  <aside class="preview" id="preview-panel">
-    <div class="preview-inner">
-      <div class="preview-endpoint-head" id="preview-endpoint-head"></div>
-      <div class="preview-label">Request</div>
-      <div id="preview-curl-slot"><p class="preview-empty">Scroll to an endpoint to see its request here.</p></div>
-      <div class="preview-label preview-response-label" id="preview-response-label" hidden>Response</div>
-      <div id="preview-response-slot"></div>
-    </div>
-  </aside>
 </div>
 
 <footer>
@@ -1663,12 +1719,9 @@
     var saved = null;
     try { saved = localStorage.getItem('cowork-docs-base'); } catch (e) {}
     if (saved === 'local') setBase('local');
-
-    if (window.refreshPreviewPanel) window.refreshPreviewPanel();
   })();
 
-  // Copy buttons — every code block gets one, wired via delegation so it
-  // works on the live-preview panel's cloned blocks too.
+  // Copy buttons — every code block gets one.
   (function() {
     document.querySelectorAll('.code-block .code-header').forEach(function(header) {
       if (header.querySelector('.copy-btn')) return;
@@ -1691,91 +1744,6 @@
         setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
       });
     });
-  })();
-
-  // Live preview panel — mirrors the curl/response of whichever endpoint is
-  // currently scrolled into view. Copy buttons on cloned blocks work because
-  // clicks are handled by the delegated listener above, not per-element.
-  (function() {
-    var panel = document.getElementById('preview-panel');
-    var endpoints = Array.from(document.querySelectorAll('.endpoint'));
-    if (!panel || !endpoints.length) return;
-
-    var headEl = document.getElementById('preview-endpoint-head');
-    var curlSlot = document.getElementById('preview-curl-slot');
-    var responseLabel = document.getElementById('preview-response-label');
-    var responseSlot = document.getElementById('preview-response-slot');
-    var activeEndpoint = null;
-
-    function findCurlBlock(ep) {
-      var blocks = ep.querySelectorAll('.code-block');
-      for (var i = 0; i < blocks.length; i++) {
-        var lang = blocks[i].querySelector('.code-lang');
-        if (lang && lang.textContent.trim() === 'curl') return blocks[i];
-      }
-      return null;
-    }
-
-    function findResponseBlock(ep) {
-      var labels = ep.querySelectorAll('.schema-label');
-      for (var i = 0; i < labels.length; i++) {
-        if (labels[i].textContent.trim().indexOf('Response') === 0) {
-          var next = labels[i].nextElementSibling;
-          if (next && next.classList.contains('code-block')) return next;
-        }
-      }
-      return null;
-    }
-
-    function renderEndpoint(ep) {
-      activeEndpoint = ep;
-      headEl.innerHTML = '';
-      var method = ep.querySelector('.method');
-      var path = ep.querySelector('.endpoint-path');
-      if (method) headEl.appendChild(method.cloneNode(true));
-      if (path) {
-        var p = document.createElement('span');
-        p.className = 'path';
-        p.textContent = path.textContent;
-        headEl.appendChild(p);
-      }
-
-      var curl = findCurlBlock(ep);
-      curlSlot.innerHTML = '';
-      if (curl) {
-        curlSlot.appendChild(curl.cloneNode(true));
-      } else {
-        curlSlot.innerHTML = '<p class="preview-empty">No curl example for this endpoint — see the parameters above.</p>';
-      }
-
-      var response = findResponseBlock(ep);
-      responseSlot.innerHTML = '';
-      if (response) {
-        responseLabel.hidden = false;
-        responseSlot.appendChild(response.cloneNode(true));
-      } else {
-        responseLabel.hidden = true;
-      }
-    }
-
-    function updateActiveEndpoint(force) {
-      var scrollY = window.scrollY + 140;
-      var current = endpoints[0];
-      for (var i = 0; i < endpoints.length; i++) {
-        if (endpoints[i].getBoundingClientRect().top + window.scrollY <= scrollY) {
-          current = endpoints[i];
-        } else {
-          break;
-        }
-      }
-      if (force || current !== activeEndpoint) renderEndpoint(current);
-    }
-
-    window.addEventListener('scroll', function() { updateActiveEndpoint(false); }, { passive: true });
-    updateActiveEndpoint(true);
-
-    // Re-render with fresh (possibly re-based) content after a toggle switch.
-    window.refreshPreviewPanel = function() { updateActiveEndpoint(true); };
   })();
 </script>
 </body>
