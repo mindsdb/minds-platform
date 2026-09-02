@@ -492,6 +492,22 @@
   </span>-H <span class="st">"Content-Type: application/json"</span> \
   -d <span class="st">'{"project_id":"proj_xyz","title":"Q2 analysis","topic":"Analyse Q2 revenue by region"}'</span></pre>
           </div>
+<p class="schema-label">Response — Task object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
+  <span class="hl">"title"</span>:            <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"preview"</span>:          <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"project"</span>:          <span class="st">"Sales Automation"</span>,
+  <span class="hl">"project_id"</span>:       <span class="st">"proj_xyz"</span>,
+  <span class="hl">"project_path"</span>:     <span class="st">"/Users/you/cowork/sales-automation"</span>,
+  <span class="hl">"harness"</span>:          <span class="st">"anton"</span>,
+  <span class="hl">"model"</span>:            <span class="st">"claude-opus-4-8"</span>,
+  <span class="hl">"reasoning_effort"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:04:12Z"</span>
+}</pre>
+          </div>
             </div>
           </div>
         </div>
@@ -504,12 +520,44 @@
           <span class="endpoint-desc">List tasks</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Query parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Query parameters</p><table class="params-table">
             <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a specific project.</td></tr>
             <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter by project name instead of ID. Pass <code>all</code> to return tasks across every project.</td></tr>
             <tr><td class="p-name">limit</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Max results to return. Default <code>50</code>.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span></pre>
+          </div>
+<p class="schema-label">Response — note the key is still <code>conversations</code></p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"conversations"</span>: [
+    {
+  <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
+  <span class="hl">"title"</span>:            <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"preview"</span>:          <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"project"</span>:          <span class="st">"Sales Automation"</span>,
+  <span class="hl">"project_id"</span>:       <span class="st">"proj_xyz"</span>,
+  <span class="hl">"project_path"</span>:     <span class="st">"/Users/you/cowork/sales-automation"</span>,
+  <span class="hl">"harness"</span>:          <span class="st">"anton"</span>,
+  <span class="hl">"model"</span>:            <span class="st">"claude-opus-4-8"</span>,
+  <span class="hl">"reasoning_effort"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:04:12Z"</span>
+},
+    <span class="cm">// ...</span>
+  ]
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -527,6 +575,11 @@
           </table>
             </div>
             <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
 <p class="schema-label">Response — Task object</p><div class="code-block" style="margin-bottom:0">
             <div class="code-header"><span class="code-lang">json</span></div>
             <pre>{
@@ -555,15 +608,42 @@
           <span class="endpoint-desc">Rename a task, or repoint it to another project</span>
         </div>
         <div class="endpoint-body">
-          <p>Moving via <code>project</code>/<code>project_id</code> here only repoints the task — it does not relocate the artifacts it created. Use <code>POST /tasks/{id}/move</code> for that.</p>
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p>Moving via <code>project</code>/<code>project_id</code> here only repoints the task — it does not relocate the artifacts it created. Use <code>POST /tasks/{id}/move</code> for that.</p><p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">title</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New title.</td></tr>
             <tr><td class="p-name">topic</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Used as the new title if <code>title</code> is omitted.</td></tr>
             <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Move to a project by name.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Move to a project by ID.</td></tr>
             <tr><td class="p-name">disabled_connections</td><td class="p-meta"><span class="p-type">object[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Connections to exclude from this task's turns.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X PATCH <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"title":"Renamed task"}'</span></pre>
+          </div>
+<p class="schema-label">Response — Task object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
+  <span class="hl">"title"</span>:            <span class="st">"Renamed task"</span>,
+  <span class="hl">"preview"</span>:          <span class="st">"Renamed task"</span>,
+  <span class="hl">"project"</span>:          <span class="st">"Sales Automation"</span>,
+  <span class="hl">"project_id"</span>:       <span class="st">"proj_xyz"</span>,
+  <span class="hl">"project_path"</span>:     <span class="st">"/Users/you/cowork/sales-automation"</span>,
+  <span class="hl">"harness"</span>:          <span class="st">"anton"</span>,
+  <span class="hl">"model"</span>:            <span class="st">"claude-opus-4-8"</span>,
+  <span class="hl">"reasoning_effort"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:09:41Z"</span>
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -574,12 +654,40 @@
           <span class="endpoint-desc">Move a task to another project, artifacts included</span>
         </div>
         <div class="endpoint-body">
-          <p class="schema-label">Body</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Body</p><table class="params-table">
             <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Destination project by name. One of <code>project</code>/<code>project_id</code> is required, and it must already exist.</td></tr>
             <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Destination project by ID.</td></tr>
             <tr><td class="p-name">move_objects</td><td class="p-meta"><span class="p-type">boolean</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>true</code>. Also relocates the task's artifacts into the destination project; attached files follow automatically either way.</td></tr>
           </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X POST <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123/move \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span> \
+  </span>-H <span class="st">"Content-Type: application/json"</span> \
+  -d <span class="st">'{"project_id":"proj_new"}'</span></pre>
+          </div>
+<p class="schema-label">Response — Task object</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{
+  <span class="hl">"id"</span>:               <span class="st">"task_abc123"</span>,
+  <span class="hl">"title"</span>:            <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"preview"</span>:          <span class="st">"Q2 analysis"</span>,
+  <span class="hl">"project"</span>:          <span class="st">"Q3 Planning"</span>,
+  <span class="hl">"project_id"</span>:       <span class="st">"proj_new"</span>,
+  <span class="hl">"project_path"</span>:     <span class="st">"/Users/you/cowork/q3-planning"</span>,
+  <span class="hl">"harness"</span>:          <span class="st">"anton"</span>,
+  <span class="hl">"model"</span>:            <span class="st">"claude-opus-4-8"</span>,
+  <span class="hl">"reasoning_effort"</span>: <span class="st">null</span>,
+  <span class="hl">"created_at"</span>:       <span class="st">"2026-06-11T10:00:00Z"</span>,
+  <span class="hl">"updated_at"</span>:       <span class="st">"2026-06-11T10:11:03Z"</span>
+}</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -590,7 +698,40 @@
           <span class="endpoint-desc">Get messages in a task</span>
         </div>
         <div class="endpoint-body">
-          <p>Returns the full ordered array of message items — no pagination. Each item has <code>id</code>, <code>role</code>, <code>content</code>, <code>created_at</code>, an <code>events</code> array, and <code>harness</code> when the message came from a specific agent harness.</p>
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p>Returns the full ordered array of message items — no pagination. Each item has <code>id</code>, <code>role</code>, <code>content</code>, <code>created_at</code>, an <code>events</code> array, and <code>harness</code> when the message came from a specific agent harness.</p><p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> <span class="st">"<span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123/items"</span><span class="burl-auth-line"> \
+  -H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response — array of message items</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>[
+  {
+    <span class="hl">"id"</span>:         <span class="st">"msg_001"</span>,
+    <span class="hl">"role"</span>:       <span class="st">"user"</span>,
+    <span class="hl">"content"</span>:    <span class="st">"Analyse Q2 revenue by region"</span>,
+    <span class="hl">"created_at"</span>: <span class="st">"2026-06-11T10:00:00Z"</span>,
+    <span class="hl">"events"</span>:     []
+  },
+  {
+    <span class="hl">"id"</span>:         <span class="st">"msg_002"</span>,
+    <span class="hl">"role"</span>:       <span class="st">"assistant"</span>,
+    <span class="hl">"content"</span>:    <span class="st">"Here is the Q2 breakdown..."</span>,
+    <span class="hl">"created_at"</span>: <span class="st">"2026-06-11T10:00:41Z"</span>,
+    <span class="hl">"events"</span>:     [<span class="cm">/* streamed thought/tool events */</span>],
+    <span class="hl">"harness"</span>:    <span class="st">"anton"</span>
+  }
+]</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -601,7 +742,24 @@
           <span class="endpoint-desc">Delete a task and all its messages</span>
         </div>
         <div class="endpoint-body">
-          <p>Returns <code>{"ok": true}</code>.</p>
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<p class="schema-label">Path parameters</p><table class="params-table">
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task ID.</td></tr>
+          </table>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -613,10 +771,24 @@
         </div>
         <div class="endpoint-body">
           <p class="schema-label">Path parameters</p>
-          <table class="params-table">
+          <div class="endpoint-cols">
+            <div class="endpoint-params">
+<table class="params-table">
             <tr><td class="p-name">turn_index</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req req">required</span></td><td class="p-desc">0-based index counting only assistant messages. Also removes that turn's preceding user message, if any.</td></tr>
           </table>
-          <p>Returns <code>{"ok": true, "deleted": N}</code>, where <code>N</code> is the number of messages removed.</p>
+            </div>
+            <div class="endpoint-example">
+<div class="code-block">
+            <div class="code-header"><span class="code-lang">curl</span></div>
+            <pre><span class="hl">curl</span> -X DELETE <span class="burl-base">https://cowork.mindshub.ai/api/v1</span>/tasks/task_abc123/turns/2 \
+  <span class="burl-auth-line">-H <span class="st">"Authorization: Bearer YOUR_API_KEY"</span></span></pre>
+          </div>
+<p class="schema-label">Response</p><div class="code-block" style="margin-bottom:0">
+            <div class="code-header"><span class="code-lang">json</span></div>
+            <pre>{ <span class="hl">"ok"</span>: <span class="st">true</span>, <span class="hl">"deleted"</span>: <span class="st">4</span> }</pre>
+          </div>
+            </div>
+          </div>
         </div>
       </div>
 
