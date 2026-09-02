@@ -231,7 +231,7 @@
   .endpoint-body p { font-size: 13.5px; color: var(--ink-3); margin: 14px 0 10px; }
 
   pre { font-family: var(--font-mono); font-size: 12.5px; line-height: 1.65; color: var(--ink-2); overflow-x: auto; tab-size: 2; }
-  .code-block { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; margin: 10px 0; }
+  .code-block { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; margin: 5px 0 10px; }
   .code-header { padding: 8px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
   .copy-btn {
     font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
@@ -262,8 +262,9 @@
   .params-table tr:not(:last-child) td { border-bottom: 1px solid var(--line); }
   .params-table td { padding: 7px 0; vertical-align: top; }
   .p-name { font-family: var(--font-mono); color: var(--accent); font-size: 12px; padding-right: 16px; white-space: nowrap; width: 1%; }
-  .p-type { font-family: var(--font-mono); color: var(--ink-4); font-size: 11px; padding-right: 16px; white-space: nowrap; width: 1%; }
-  .p-req { font-family: var(--font-mono); font-size: 10px; padding-right: 16px; white-space: nowrap; width: 1%; }
+  .p-meta { padding-right: 16px; white-space: nowrap; width: 1%; }
+  .p-type { display: block; font-family: var(--font-mono); color: var(--ink-4); font-size: 11px; }
+  .p-req { display: block; font-family: var(--font-mono); font-size: 10px; margin-top: 2px; }
   .p-req.req { color: var(--method-post); }
   .p-req.opt { color: var(--ink-4); }
   .p-desc { font-size: 12.5px; color: var(--ink-3); }
@@ -475,12 +476,12 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">topic</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">The task's opening prompt. Also used to auto-generate the title if <code>title</code> is omitted.</td></tr>
-            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Human-readable name. Falls back to <code>topic</code>, then "Untitled task".</td></tr>
-            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name to attach to. Ignored if <code>project_id</code> is set. Defaults to your account's default project if both are omitted.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project ID to attach to.</td></tr>
-            <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Agent harness to run this task with, overriding the account default (e.g. <code>anton</code>).</td></tr>
-            <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Model override for this task. Persisted, so a reopened task remembers the pick.</td></tr>
+            <tr><td class="p-name">topic</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">The task's opening prompt. Also used to auto-generate the title if <code>title</code> is omitted.</td></tr>
+            <tr><td class="p-name">title</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Human-readable name. Falls back to <code>topic</code>, then "Untitled task".</td></tr>
+            <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Project name to attach to. Ignored if <code>project_id</code> is set. Defaults to your account's default project if both are omitted.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Project ID to attach to.</td></tr>
+            <tr><td class="p-name">harness</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Agent harness to run this task with, overriding the account default (e.g. <code>anton</code>).</td></tr>
+            <tr><td class="p-name">model</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Model override for this task. Persisted, so a reopened task remembers the pick.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -505,9 +506,9 @@
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a specific project.</td></tr>
-            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by project name instead of ID. Pass <code>all</code> to return tasks across every project.</td></tr>
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Max results to return. Default <code>50</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a specific project.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter by project name instead of ID. Pass <code>all</code> to return tasks across every project.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Max results to return. Default <code>50</code>.</td></tr>
           </table>
         </div>
       </div>
@@ -522,7 +523,7 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Path parameters</p><table class="params-table">
-            <tr><td class="p-name">id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task ID.</td></tr>
+            <tr><td class="p-name">id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task ID.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -557,11 +558,11 @@
           <p>Moving via <code>project</code>/<code>project_id</code> here only repoints the task — it does not relocate the artifacts it created. Use <code>POST /tasks/{id}/move</code> for that.</p>
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">title</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New title.</td></tr>
-            <tr><td class="p-name">topic</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Used as the new title if <code>title</code> is omitted.</td></tr>
-            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Move to a project by name.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Move to a project by ID.</td></tr>
-            <tr><td class="p-name">disabled_connections</td><td class="p-type">object[]</td><td class="p-req opt">optional</td><td class="p-desc">Connections to exclude from this task's turns.</td></tr>
+            <tr><td class="p-name">title</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New title.</td></tr>
+            <tr><td class="p-name">topic</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Used as the new title if <code>title</code> is omitted.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Move to a project by name.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Move to a project by ID.</td></tr>
+            <tr><td class="p-name">disabled_connections</td><td class="p-meta"><span class="p-type">object[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Connections to exclude from this task's turns.</td></tr>
           </table>
         </div>
       </div>
@@ -575,9 +576,9 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Destination project by name. One of <code>project</code>/<code>project_id</code> is required, and it must already exist.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Destination project by ID.</td></tr>
-            <tr><td class="p-name">move_objects</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>true</code>. Also relocates the task's artifacts into the destination project; attached files follow automatically either way.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Destination project by name. One of <code>project</code>/<code>project_id</code> is required, and it must already exist.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Destination project by ID.</td></tr>
+            <tr><td class="p-name">move_objects</td><td class="p-meta"><span class="p-type">boolean</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>true</code>. Also relocates the task's artifacts into the destination project; attached files follow automatically either way.</td></tr>
           </table>
         </div>
       </div>
@@ -613,7 +614,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Path parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">turn_index</td><td class="p-type">integer</td><td class="p-req req">required</td><td class="p-desc">0-based index counting only assistant messages. Also removes that turn's preceding user message, if any.</td></tr>
+            <tr><td class="p-name">turn_index</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req req">required</span></td><td class="p-desc">0-based index counting only assistant messages. Also removes that turn's preceding user message, if any.</td></tr>
           </table>
           <p>Returns <code>{"ok": true, "deleted": N}</code>, where <code>N</code> is the number of messages removed.</p>
         </div>
@@ -664,14 +665,14 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">conversation</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Task/conversation ID to append to. Omit to start a new task — pass <code>project</code> or <code>project_id</code> to place it.</td></tr>
-            <tr><td class="p-name">input</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">User message text.</td></tr>
-            <tr><td class="p-name">project</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project name for a new task, when <code>conversation</code> is omitted.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Project ID for a new task, when <code>conversation</code> is omitted.</td></tr>
-            <tr><td class="p-name">stream</td><td class="p-type">boolean</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>false</code>. Set <code>true</code> to receive the Server-Sent Events shown above; otherwise a single JSON response is returned once the turn completes.</td></tr>
-            <tr><td class="p-name">model</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's model for this turn only.</td></tr>
-            <tr><td class="p-name">reasoning_effort</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's reasoning effort for this turn only.</td></tr>
-            <tr><td class="p-name">harness</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Override the account's default harness for this turn only (e.g. <code>anton</code>).</td></tr>
+            <tr><td class="p-name">conversation</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Task/conversation ID to append to. Omit to start a new task — pass <code>project</code> or <code>project_id</code> to place it.</td></tr>
+            <tr><td class="p-name">input</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">User message text.</td></tr>
+            <tr><td class="p-name">project</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Project name for a new task, when <code>conversation</code> is omitted.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Project ID for a new task, when <code>conversation</code> is omitted.</td></tr>
+            <tr><td class="p-name">stream</td><td class="p-meta"><span class="p-type">boolean</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>false</code>. Set <code>true</code> to receive the Server-Sent Events shown above; otherwise a single JSON response is returned once the turn completes.</td></tr>
+            <tr><td class="p-name">model</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Override the account's model for this turn only.</td></tr>
+            <tr><td class="p-name">reasoning_effort</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Override the account's reasoning effort for this turn only.</td></tr>
+            <tr><td class="p-name">harness</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Override the account's default harness for this turn only (e.g. <code>anton</code>).</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -697,8 +698,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p>Reconnect to an in-flight (or just-finished) turn: replay from <code>from_seq</code>, then live-tail new output until the turn ends. Pass <code>from_seq=0</code> to replay a task's whole turn from the beginning, or the last sequence number you rendered to resume without re-rendering anything. 404 means no buffer is registered for this task — fall back to <code>GET /tasks/{id}/items</code> for the persisted history.</p><p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task/conversation to tail.</td></tr>
-            <tr><td class="p-name">from_seq</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>. Records with <code>seq &gt;= from_seq</code> are replayed, then the connection live-tails.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task/conversation to tail.</td></tr>
+            <tr><td class="p-name">from_seq</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>0</code>. Records with <code>seq &gt;= from_seq</code> are replayed, then the connection live-tails.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -734,7 +735,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task whose active stream to check.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task whose active stream to check.</td></tr>
           </table>
           <p>Returns <code>latest_seq</code> — pass it as <code>from_seq</code> to <code>/responses/tail</code> to resume without re-rendering anything already shown, or <code>0</code> to replay from the start.</p>
         </div>
@@ -750,7 +751,7 @@
           <p>Closing the connection does not stop the run — only this does.</p>
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task to cancel.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task to cancel.</td></tr>
           </table>
         </div>
       </div>
@@ -771,10 +772,10 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Display name for the project.</td></tr>
-            <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Short description shown in the UI.</td></tr>
-            <tr><td class="p-name">connector_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Data source connections available within this project.</td></tr>
-            <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Global skills to activate for all tasks in this project.</td></tr>
+            <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Display name for the project.</td></tr>
+            <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Short description shown in the UI.</td></tr>
+            <tr><td class="p-name">connector_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Data source connections available within this project.</td></tr>
+            <tr><td class="p-name">skill_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Global skills to activate for all tasks in this project.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -800,8 +801,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
-            <tr><td class="p-name">offset</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>0</code>.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>50</code>.</td></tr>
+            <tr><td class="p-name">offset</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>0</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -831,10 +832,10 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"></td></tr>
-            <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"></td></tr>
-            <tr><td class="p-name">connector_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Replaces the current list.</td></tr>
-            <tr><td class="p-name">skill_ids</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Replaces the current list.</td></tr>
+            <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"></td></tr>
+            <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"></td></tr>
+            <tr><td class="p-name">connector_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replaces the current list.</td></tr>
+            <tr><td class="p-name">skill_ids</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replaces the current list.</td></tr>
           </table>
         </div>
       </div>
@@ -863,9 +864,9 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
-            <tr><td class="p-name">type</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>app</code>, <code>report</code>, <code>doc</code>, or <code>dashboard</code>.</td></tr>
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Default <code>50</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a project.</td></tr>
+            <tr><td class="p-name">type</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"><code>app</code>, <code>report</code>, <code>doc</code>, or <code>dashboard</code>.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Default <code>50</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -895,8 +896,8 @@
         <div class="endpoint-body">
           <p class="schema-label">Query parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">path</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Relative artifact path, e.g. <code>sales_dashboard/index.html</code>.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Project that owns the artifact.</td></tr>
+            <tr><td class="p-name">path</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Relative artifact path, e.g. <code>sales_dashboard/index.html</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project that owns the artifact.</td></tr>
           </table>
         </div>
       </div>
@@ -910,7 +911,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">artifact_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Artifact to open in the Electron window.</td></tr>
+            <tr><td class="p-name">artifact_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Artifact to open in the Electron window.</td></tr>
           </table>
         </div>
       </div>
@@ -924,8 +925,8 @@
         <div class="endpoint-body">
           <p class="schema-label">Path parameters</p>
           <table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Project ID.</td></tr>
-            <tr><td class="p-name">path</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">File path within the artifact, e.g. <code>index.html</code> or <code>assets/chart.js</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project ID.</td></tr>
+            <tr><td class="p-name">path</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">File path within the artifact, e.g. <code>index.html</code> or <code>assets/chart.js</code>.</td></tr>
           </table>
         </div>
       </div>
@@ -946,8 +947,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
-            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a project.</td></tr>
+            <tr><td class="p-name">status</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -981,11 +982,11 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Project this schedule belongs to.</td></tr>
-            <tr><td class="p-name">cron</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Standard 5-field cron expression, e.g. <code>"0 9 * * 1"</code> = every Monday at 09:00.</td></tr>
-            <tr><td class="p-name">prompt</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Task the agent runs at each scheduled time.</td></tr>
-            <tr><td class="p-name">timezone</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">IANA timezone. Default <code>UTC</code>.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Append each run to an existing task. If omitted, a new task is created per run.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Project this schedule belongs to.</td></tr>
+            <tr><td class="p-name">cron</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Standard 5-field cron expression, e.g. <code>"0 9 * * 1"</code> = every Monday at 09:00.</td></tr>
+            <tr><td class="p-name">prompt</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Task the agent runs at each scheduled time.</td></tr>
+            <tr><td class="p-name">timezone</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">IANA timezone. Default <code>UTC</code>.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Append each run to an existing task. If omitted, a new task is created per run.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1010,10 +1011,10 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">cron</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New cron expression.</td></tr>
-            <tr><td class="p-name">prompt</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Updated task prompt.</td></tr>
-            <tr><td class="p-name">timezone</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New timezone.</td></tr>
-            <tr><td class="p-name">status</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
+            <tr><td class="p-name">cron</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New cron expression.</td></tr>
+            <tr><td class="p-name">prompt</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Updated task prompt.</td></tr>
+            <tr><td class="p-name">timezone</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New timezone.</td></tr>
+            <tr><td class="p-name">status</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc"><code>active</code> or <code>paused</code>.</td></tr>
           </table>
         </div>
       </div>
@@ -1050,9 +1051,9 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p>Multipart <code>form-data</code> upload.</p><p class="schema-label">Form fields</p><table class="params-table">
-            <tr><td class="p-name">file</td><td class="p-type">file</td><td class="p-req req">required</td><td class="p-desc">The file binary. Accepted: PDF, DOCX, XLSX, CSV, TXT, PNG, JPG, and more.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a project.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Attach to a task. Can be set alongside <code>project_id</code>.</td></tr>
+            <tr><td class="p-name">file</td><td class="p-meta"><span class="p-type">file</span><span class="p-req req">required</span></td><td class="p-desc">The file binary. Accepted: PDF, DOCX, XLSX, CSV, TXT, PNG, JPG, and more.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Attach to a project.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Attach to a task. Can be set alongside <code>project_id</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1078,8 +1079,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a project.</td></tr>
-            <tr><td class="p-name">conversation_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter to a task.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a project.</td></tr>
+            <tr><td class="p-name">conversation_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter to a task.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1156,7 +1157,7 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">spec_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by connector type (e.g. <code>postgres</code>).</td></tr>
+            <tr><td class="p-name">spec_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter by connector type (e.g. <code>postgres</code>).</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1186,9 +1187,9 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">spec_id</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The connector spec to use (e.g. <code>"postgres"</code>).</td></tr>
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Human-readable label for this connection.</td></tr>
-            <tr><td class="p-name">credentials</td><td class="p-type">object</td><td class="p-req req">required</td><td class="p-desc">Key-value map of credential fields defined by the spec. Secret fields are encrypted at rest and never returned.</td></tr>
+            <tr><td class="p-name">spec_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">The connector spec to use (e.g. <code>"postgres"</code>).</td></tr>
+            <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Human-readable label for this connection.</td></tr>
+            <tr><td class="p-name">credentials</td><td class="p-meta"><span class="p-type">object</span><span class="p-req req">required</span></td><td class="p-desc">Key-value map of credential fields defined by the spec. Secret fields are encrypted at rest and never returned.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1232,7 +1233,7 @@
           <p>Returns a redirect URL. Send the user's browser there; after authorization the platform receives the callback and stores the token automatically.</p>
           <p class="schema-label">Path parameter</p>
           <table class="params-table">
-            <tr><td class="p-name">spec</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The connector spec ID (e.g. <code>google-sheets</code>, <code>notion</code>).</td></tr>
+            <tr><td class="p-name">spec</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">The connector spec ID (e.g. <code>google-sheets</code>, <code>notion</code>).</td></tr>
           </table>
         </div>
       </div>
@@ -1253,8 +1254,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Return memories scoped to this project. Omit to return global memories.</td></tr>
-            <tr><td class="p-name">source</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Filter by who created it: <code>user</code> or <code>agent</code>.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Return memories scoped to this project. Omit to return global memories.</td></tr>
+            <tr><td class="p-name">source</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Filter by who created it: <code>user</code> or <code>agent</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1290,8 +1291,8 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">content</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The fact or preference to remember. Plain text.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Scope to a project. Omit for a global memory.</td></tr>
+            <tr><td class="p-name">content</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">The fact or preference to remember. Plain text.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Scope to a project. Omit for a global memory.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1316,7 +1317,7 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">content</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Updated text for the memory.</td></tr>
+            <tr><td class="p-name">content</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Updated text for the memory.</td></tr>
           </table>
         </div>
       </div>
@@ -1375,10 +1376,10 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Body</p><table class="params-table">
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Kebab-case identifier. Used to invoke the skill from a task.</td></tr>
-            <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">Short summary of what this skill does. Shown in the UI and used by the agent to decide whether to invoke it.</td></tr>
-            <tr><td class="p-name">instructions</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Detailed prompt injected whenever this skill is active. Explains how to carry out the task, preferred format, constraints, etc.</td></tr>
-            <tr><td class="p-name">tools</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">List of tool identifiers the agent may call when running this skill (e.g. <code>"sql_query"</code>, <code>"send_email"</code>).</td></tr>
+            <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Kebab-case identifier. Used to invoke the skill from a task.</td></tr>
+            <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">Short summary of what this skill does. Shown in the UI and used by the agent to decide whether to invoke it.</td></tr>
+            <tr><td class="p-name">instructions</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Detailed prompt injected whenever this skill is active. Explains how to carry out the task, preferred format, constraints, etc.</td></tr>
+            <tr><td class="p-name">tools</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">List of tool identifiers the agent may call when running this skill (e.g. <code>"sql_query"</code>, <code>"send_email"</code>).</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
@@ -1408,10 +1409,10 @@
         <div class="endpoint-body">
           <p class="schema-label">Body</p>
           <table class="params-table">
-            <tr><td class="p-name">name</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">New identifier.</td></tr>
-            <tr><td class="p-name">description</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Updated summary.</td></tr>
-            <tr><td class="p-name">instructions</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Revised prompt instructions.</td></tr>
-            <tr><td class="p-name">tools</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Replace the full list of allowed tools.</td></tr>
+            <tr><td class="p-name">name</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">New identifier.</td></tr>
+            <tr><td class="p-name">description</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Updated summary.</td></tr>
+            <tr><td class="p-name">instructions</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Revised prompt instructions.</td></tr>
+            <tr><td class="p-name">tools</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Replace the full list of allowed tools.</td></tr>
           </table>
         </div>
       </div>
@@ -1620,10 +1621,10 @@
           <div class="endpoint-cols">
             <div class="endpoint-params">
 <p class="schema-label">Query parameters</p><table class="params-table">
-            <tr><td class="p-name">q</td><td class="p-type">string</td><td class="p-req req">required</td><td class="p-desc">The search query. Supports natural language and keyword matching.</td></tr>
-            <tr><td class="p-name">project_id</td><td class="p-type">string</td><td class="p-req opt">optional</td><td class="p-desc">Limit results to a single project.</td></tr>
-            <tr><td class="p-name">types</td><td class="p-type">string[]</td><td class="p-req opt">optional</td><td class="p-desc">Comma-separated list of resource types to include: <code>conversation</code>, <code>artifact</code>, <code>file</code>, <code>memory</code>. Defaults to all.</td></tr>
-            <tr><td class="p-name">limit</td><td class="p-type">integer</td><td class="p-req opt">optional</td><td class="p-desc">Maximum results to return. Defaults to <code>20</code>, max <code>100</code>.</td></tr>
+            <tr><td class="p-name">q</td><td class="p-meta"><span class="p-type">string</span><span class="p-req req">required</span></td><td class="p-desc">The search query. Supports natural language and keyword matching.</td></tr>
+            <tr><td class="p-name">project_id</td><td class="p-meta"><span class="p-type">string</span><span class="p-req opt">optional</span></td><td class="p-desc">Limit results to a single project.</td></tr>
+            <tr><td class="p-name">types</td><td class="p-meta"><span class="p-type">string[]</span><span class="p-req opt">optional</span></td><td class="p-desc">Comma-separated list of resource types to include: <code>conversation</code>, <code>artifact</code>, <code>file</code>, <code>memory</code>. Defaults to all.</td></tr>
+            <tr><td class="p-name">limit</td><td class="p-meta"><span class="p-type">integer</span><span class="p-req opt">optional</span></td><td class="p-desc">Maximum results to return. Defaults to <code>20</code>, max <code>100</code>.</td></tr>
           </table>
             </div>
             <div class="endpoint-example">
