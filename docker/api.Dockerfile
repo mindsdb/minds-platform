@@ -1,4 +1,4 @@
-FROM python:3.12-slim AS builder
+FROM python:3.15-rc-alpine AS builder
 
 RUN pip install uv --no-cache-dir
 
@@ -10,7 +10,7 @@ RUN python -m venv /opt/venv && \
     /opt/venv/bin/pip install uv --no-cache-dir && \
     /opt/venv/bin/uv pip install ./core_agent ./core_api
 
-FROM python:3.12-slim AS runtime
+FROM python:3.15-rc-alpine AS runtime
 
 LABEL org.opencontainers.image.title="cowork-api"
 LABEL org.opencontainers.image.source="https://github.com/mindsdb/minds-platform"
